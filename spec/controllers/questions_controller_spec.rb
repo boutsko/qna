@@ -1,15 +1,15 @@
-#require 'rails_helper'
+#require 'spec_helper'
 require 'rails_helper'
 
 RSpec.describe QuestionsController, type: :controller do
   describe 'GET #index' do
-    before do
-      @questions = FactoryGirl.create_list(:question, 2)
-      get :index
-    end
+
+    let(:questions) { create_list(:question, 2) }
+
+    before { get :index }
 
     it 'populates array of all questions' do
-      expect(assigns(:questions)).to match_array(@questions)
+      expect(assigns(:questions)).to match_array(questions)
     end
     
     it 'renders index view' do
