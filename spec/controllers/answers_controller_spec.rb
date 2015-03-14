@@ -41,4 +41,16 @@ RSpec.describe AnswersController, type: :controller do
     end
   end
 
+      describe 'GET #edit' do
+    before { get :edit, id: answer, question_id: question }
+
+    it 'assigns requested answer to @answer' do
+      expect(assigns(:answer)).to eq answer
+    end
+
+    it 'renders edit view' do
+      expect(response).to render_template :edit
+    end
+  end
+
 end

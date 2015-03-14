@@ -1,6 +1,6 @@
 class AnswersController < ApplicationController
   before_action :load_question
-  before_action :load_answer, only: :show
+  before_action :load_answer, only: [:show, :edit]
   
   def index
     @answers = @question.answers
