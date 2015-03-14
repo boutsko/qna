@@ -1,5 +1,6 @@
 class AnswersController < ApplicationController
-before_action :load_question
+  before_action :load_question
+  before_action :load_answer, only: :show
   
   def index
     @answers = @question.answers
@@ -27,4 +28,9 @@ before_action :load_question
   def load_question
     @question = Question.find(params[:question_id])
   end
+
+  def load_answer
+    @answer = @question.answers.find(params[:id])
+  end
 end
+
