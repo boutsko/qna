@@ -4,7 +4,7 @@ RSpec.describe AnswersController, type: :controller do
   let(:question) { create(:question) }
   let(:answer) { create(:answer, question: question) }
   let(:answers) { create_list(:answer, 2, question: question) }
-  
+  let!(:all_answers) { Answer.all }
 
   describe "GET #index" do
     before { get :index, question_id: question }
@@ -66,9 +66,11 @@ RSpec.describe AnswersController, type: :controller do
     end
 
     context 'with invalid attributes' do
-      answers_all = Answer.all
+      before { all_answers }
+      
       it 'does not save the answer' do
-        expect { post :create, answer: build_attributes(:invalid_answer), question_id: question }.to_not change(answers_all, :count)
+#        expect { post :create, answer: build_attributes(:invalid_answer), question_id: question }.to_not change(question.answers, :count)
+        expect { post :create, answer: build_attributes(:invalid_answer), question_id: question }.to_not change(all_answers, :count)
       end
 
       it 're-renders new view' do
@@ -100,6 +102,7 @@ RSpec.describe AnswersController, type: :controller do
 
     context 'invalid attributes' do
       before { patch :update, id: answer, answer: { body: nil }, question_id: question }
+
       it 'does not change answer attributes' do
         answer.reload
         expect(answer.body).to eq 'MyText'
