@@ -15,17 +15,12 @@ and for a question I can see provided answers
   scenario 'A visitor can see all questions' do
 
     visit questions_path
-
-    save_and_open_page
     expect(page).to have_content 'MyString'
-
   end
 
-  # scenario 'A visitor can see all answers for a question' do
+  scenario 'A visitor can see all answers for a question' do
 
-  #   visit  question_answer_path
-
-  #   expect(page).to have_content 'MyText'
-
-  # end
+    visit question_path(question)
+    expect(page).to have_content 'MyText'
+  end
 end

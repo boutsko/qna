@@ -1,1 +1,11 @@
-p Your question successfully created.
+h1 = @question.title
+p = @question.body
+p Answers:
+- @question.answers.each do |answer|
+  p
+    = answer.body
+    | ,
+    = link_to "Delete Answer", question_answer_path(@question, answer.id), method: :delete unless current_user.nil? or current_user.id != answer.user_id
+p = link_to "Create Answer", new_question_answer_path(@question)
+p = link_to "Delete Question", question_path, method: :delete unless current_user.nil? or current_user.id != @question.user_id
+p =
