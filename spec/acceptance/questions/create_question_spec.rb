@@ -16,12 +16,8 @@ feature 'Ask question', %q{
 
     fill_in 'Title', with: 'Test question'
     fill_in 'Body', with: 'text text'
-
-    # save_and_open_page
-
     click_on 'Create'
-
-    expect(page).to have_content 'Your question successfully created.'
+    expect(page).to have_content 'Test question'
   end
 
   scenario 'Non-authenticated user created question' do

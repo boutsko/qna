@@ -1,12 +1,14 @@
-- unless @questions.empty?
-  p= I18n.t('questions.found', count: @questions.count)
+- if user_signed_in?
+  p= link_to 'Logout', destroy_user_session_path, :method => :delete
 
-  table id="questions"
-    - for question in @questions do
-      tr
-        td.title = question.title
-- else
-  p No questions yet.
+- else 
+  p= link_to 'Login', new_user_session_path
+  p= link_to 'Register', new_user_registration_path
+
+table id="questions"
+  - for question in @questions do
+    tr
+      td.title = question.title
 
 = link_to 'Ask question', new_question_path
 
