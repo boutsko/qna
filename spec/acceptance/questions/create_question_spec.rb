@@ -1,9 +1,9 @@
 require 'rails_helper'
 
-feature 'Create question', %q{
-  In order to get answer from community
-  As authenticated user
-  I want to be able to ask question
+feature 'Ask question', %q{
+  to receive a piece wisdom form the comunity 
+  as an authorized member of QnA
+  I can ask a question
 } do
 
   given(:user) { create(:user) }
