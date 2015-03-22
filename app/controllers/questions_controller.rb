@@ -3,10 +3,12 @@ class QuestionsController < ApplicationController
   before_action :load_question, only: [:show, :edit, :update, :destroy]
 
   def index
-   @questions = Question.all
+    @questions = Question.all
   end
 
   def show
+    @answers = @question.answers
+    @question.id = 100
   end
 
   def new
@@ -19,9 +21,9 @@ class QuestionsController < ApplicationController
   def create
     @question = Question.create(question_params)
     if @question.save
-     redirect_to @question
+      redirect_to @question
     else
-     render :new
+      render :new
     end
   end
 
@@ -44,7 +46,13 @@ class QuestionsController < ApplicationController
     @question = Question.find(params[:id])
   end
 
-  def question_params
-    params.require(:question).permit(:title, :body)
+  # def question_params
+  #   params.require(:question).permit(:title, :body)
+  # end
+
+  def strong_params
+    strong_params = params.require(:question).permit(:title, :body, :id, :user_id)
+    strong_params.merge( user_id: current_user.id ) if user_signed_in?
   end
 end
+

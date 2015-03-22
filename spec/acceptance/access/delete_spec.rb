@@ -6,22 +6,33 @@ feature 'User deletes his input', %q{
  I should log in first
 } do
 
-  given!(:user) { create(:user) }
-  given!(:author) { create(:user) }
-  given!(:question1) { create(:question, user: user) }
-  given!(:question2) { create(:question, user: author) }
+  given(:author) { create(:user) }
+  given(:other) { create(:user) }
+  given(:question1) { create(:question, user: author) }
+  given(:question2) { create(:question, user: other) }
 
+  scenario 'Authenticated user deletes his question' do
 
-  scenario 'Authenticated user deletes his question', focus: true do
-
-    sign_in(user)
+    sign_in(author)
     visit question_path(question1)
     save_and_open_page
     click_on 'Delete Question'
 
   end
 
-  scenario 'guest tries to delete a question created by input'
+  scenario 'guest tries to delete a question' do
 
-  scenario 'Authenticated user deletes question created by another user'
+    visit question_path(question1)
+#    save_and_open_page
+    expect(page).to_not have_text("Delete")
+  end
+
+  scenario 'Authenticated user deletes question created by another user' do
+
+    sign_in(other)
+    visit question_path(question1)
+    # save_and_open_page
+    expect(page).to_not have_text("Delete")
+    # click_on 'Delete Question'
+  end
 end
