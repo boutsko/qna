@@ -7,15 +7,17 @@ feature 'Log out a user', %q{
 } do
 
   given(:user) { create(:user) }
+  given(:question) { create(:question, user: user) }
   
   scenario 'Loged in user tries to log out' do
     sign_in(user)
-    
-    save_and_open_page
-
+    visit question_path(question)
     expect(page).to have_content 'Logout'
     click_on 'Logout'
     expect(page).to have_content 'Signed out successfully.'
+    
+    visit question_path(question)
+    expect(page).to have_content 'Login'
   end
 end
 
