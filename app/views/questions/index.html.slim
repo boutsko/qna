@@ -1,8 +1,9 @@
 
 table id="questions"
-  - for question in @questions do
-    tr
-      td.title = question.title
+
+- @questions.each do |question|
+  tr
+    td.title = question.title
 
 = link_to 'Ask question', new_question_path
 
