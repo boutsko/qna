@@ -8,7 +8,7 @@ feature 'Answer a question', %q{
 
   given!(:user) { create(:user) }
   given!(:author) { create(:user) }
-  given!(:question) { create(:question, user: author) }
+  given!(:question) { create_list(:question, 2, user: author) }
   #  given!(:answer) { create(:answer, question: question) }
 
   scenario 'Authorized user answers a question created by other user' do
@@ -26,6 +26,7 @@ feature 'Answer a question', %q{
   scenario 'Guest can\'t answer questons' do
     visit questions_path
     expect(page).to_not have_content 'Create Answer'
+    save_and_open_page
   end
 end
 

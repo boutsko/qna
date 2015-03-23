@@ -1,9 +1,7 @@
 
-table id="questions"
-
 - @questions.each do |question|
-  tr
-    td.title = question.title
+  p= question.title
 
-= link_to 'Ask question', new_question_path
+- if user_signed_in?
+  p= link_to 'Ask question', new_question_path
 
