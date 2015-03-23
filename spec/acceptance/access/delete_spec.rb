@@ -15,7 +15,7 @@ feature 'User deletes his input', %q{
 
     sign_in(author)
     visit question_path(question1)
-    save_and_open_page
+#    save_and_open_page
     click_on 'Delete Question'
   end
 

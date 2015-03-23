@@ -15,18 +15,18 @@ feature 'Answer a question', %q{
 
     sign_in(user)
 
+    # visit question_path(question)
     visit question_path(question)
     click_on 'Create Answer'
     fill_in 'body', with: 'text text'
     click_on 'Create Answer'
-#    save_and_open_page
-   expect(page).to have_content 'text text'
+    expect(page).to have_content 'text text'
+
   end
 
   scenario 'Guest can\'t answer questons' do
     visit questions_path
     expect(page).to_not have_content 'Create Answer'
-    save_and_open_page
   end
 end
 
