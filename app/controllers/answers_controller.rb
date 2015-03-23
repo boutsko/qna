@@ -7,6 +7,7 @@ class AnswersController < ApplicationController
   end
 
   def show
+#      redirect_to question_answer_path(@question, @answer)
   end
 
   def new

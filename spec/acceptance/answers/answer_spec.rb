@@ -11,7 +11,7 @@ feature 'Answer a question', %q{
   given!(:question) { create(:question, user: author) }
   #  given!(:answer) { create(:answer, question: question) }
 
-  scenario 'Authorized user answers a question' do
+  scenario 'Authorized user answers a question created by other user' do
 
     sign_in(user)
 
@@ -19,9 +19,13 @@ feature 'Answer a question', %q{
     click_on 'Create Answer'
     fill_in 'body', with: 'text text'
     click_on 'Create Answer'
-    expect(page).to have_content 'Answers#show'
+#    save_and_open_page
+   expect(page).to have_content 'text text'
+  end
 
-    
+  scenario 'Guest can\'t answer questons' do
+    visit questions_path
+    expect(page).to_not have_content 'Create Answer'
   end
 end
 

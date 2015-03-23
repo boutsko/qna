@@ -8,8 +8,8 @@ feature 'User deletes his input', %q{
 
   given(:author) { create(:user) }
   given(:other) { create(:user) }
-  given(:question1) { create(:question, user: author) }
-  given(:question2) { create(:question, user: other) }
+  given!(:question1) { create(:question, user: author) }
+  given!(:question2) { create(:question, user: other) }
 
   scenario 'Authenticated user deletes his question' do
 
@@ -17,7 +17,6 @@ feature 'User deletes his input', %q{
     visit question_path(question1)
     save_and_open_page
     click_on 'Delete Question'
-
   end
 
   scenario 'guest tries to delete a question' do
