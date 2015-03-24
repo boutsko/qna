@@ -7,8 +7,6 @@ class QuestionsController < ApplicationController
   end
 
   def show
-    # @answers = @question.answers
-    # @question.id = 100
   end
 
   def new
@@ -21,8 +19,9 @@ class QuestionsController < ApplicationController
   def create
     @question = Question.create(question_params)
     if @question.save
-      redirect_to @question
+      redirect_to @question, notice: 'Question created'
     else
+      flash[:alert] = 'ERROR: Question not created'
       render :new
     end
   end
@@ -36,15 +35,19 @@ class QuestionsController < ApplicationController
   end
 
   def destroy
-    @question.destroy
-    redirect_to questions_path
+    if @question.user_id == current_user.id
+      @question.destroy!
+      redirect_to root_path, notice: 'Question destroyed'
+    else
+      flash[:notice] = "You didn't create this question, can't destroy it"
+      render :show
+    end
   end
   
   private
   
   def load_question
     @question = Question.find(params[:id])
-    # @question = Question.find_by_id(params[:id])
   end
 
   def question_params
