@@ -9,18 +9,15 @@ feature 'Answer a question', %q{
   given!(:user) { create(:user) }
   given!(:author) { create(:user) }
   given!(:question) { create_list(:question, 2, user: author) }
-  #  given!(:answer) { create(:answer, question: question) }
 
   scenario 'Authorized user answers a question created by other user' do
 
     sign_in(user)
 
-    # visit question_path(question)
     visit question_path(question)
     click_on 'Create Answer'
     fill_in 'body', with: 'text text'
     click_on 'Create Answer'
-save_and_open_page
     expect(page).to have_content 'text text'
 
   end
