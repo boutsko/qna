@@ -20,6 +20,7 @@ feature 'Answer a question', %q{
     click_on 'Create Answer'
     fill_in 'body', with: 'text text'
     click_on 'Create Answer'
+save_and_open_page
     expect(page).to have_content 'text text'
 
   end
