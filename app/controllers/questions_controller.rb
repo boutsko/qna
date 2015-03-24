@@ -7,8 +7,8 @@ class QuestionsController < ApplicationController
   end
 
   def show
-    @answers = @question.answers
-#    @question.id = 100
+    # @answers = @question.answers
+    # @question.id = 100
   end
 
   def new
@@ -37,17 +37,18 @@ class QuestionsController < ApplicationController
 
   def destroy
     @question.destroy
-    redirect_to question_path
+    redirect_to questions_path
   end
   
   private
   
   def load_question
     @question = Question.find(params[:id])
+    # @question = Question.find_by_id(params[:id])
   end
 
   def question_params
-    params.require(:question).permit(:title, :body, :id)
+    params.require(:question).permit(:title, :body)
   end
 
   # def strong_params

@@ -1,7 +1,6 @@
 h1 = @question.title
 h1 = @question.id
-//h1 = current_user.id
-p = @question.body
+p= @question.body
 p Answers:
 - @question.answers.each do |answer|
   p
@@ -11,8 +10,8 @@ p Answers:
       = link_to "Delete Answer", question_answer_path(@question, answer.id), method: :delete 
 
 - if !current_user.nil? 
-  p = link_to "Create Answer", new_question_answer_path(@question)
+  p= link_to "Create Answer", new_question_answer_path(@question)
 
 - if !current_user.nil? and current_user.id = @question.user_id
-  p = link_to "Delete Question", question_path(@question), method: :delete 
-  p =
+  p= link_to "Delete Question", @question, method: :delete 
+

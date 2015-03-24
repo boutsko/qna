@@ -1,21 +1,23 @@
 require 'rails_helper'
 
 feature 'User deletes his input', %q{
- to delete a question or answer which I created
- as a loged in user
+ to delete my questions and answers
+ as a logged in user
  I should log in first
 } do
 
-  given(:author) { create(:user) }
-  given(:other) { create(:user) }
+  given!(:author) { create(:user) }
+  given!(:other) { create(:user) }
   given!(:question1) { create(:question, user: author) }
   given!(:question2) { create(:question, user: other) }
 
   scenario 'Authenticated user deletes his question' do
 
     sign_in(author)
-    visit question_path(question1)
-#    save_and_open_page
+    qu = Question.create!(user: author, title: "foo", body: "bar")
+    visit question_path(qu)
+    puts qu.id
+    # save_and_open_page
     click_on 'Delete Question'
   end
 

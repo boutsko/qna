@@ -29,6 +29,9 @@ RSpec.configure do |config|
   config.include Devise::TestHelpers, type: :controller
   config.extend ControllerMacros, type: :controller
   config.include AcceptanceController, type: :feature
+  config.filter_run :focus
+  config.run_all_when_everything_filtered = true
+
   # Remove this line if you're not using ActiveRecord or ActiveRecord fixtures
   config.fixture_path = "#{::Rails.root}/spec/fixtures"
 
@@ -59,5 +62,4 @@ RSpec.configure do |config|
     exclude_attributes = %w(id created_at updated_at)
     FactoryGirl.build(*args).attributes.except(exclude_attributes).symbolize_keys
   end
-
 end
