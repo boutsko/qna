@@ -3,7 +3,9 @@ require 'rails_helper'
 RSpec.describe QuestionsController, type: :controller do
 
   let!(:user) { create(:user) }
+  let(:other_user) { create(:user) }
   let(:question) { create(:question, user: user) }
+  let(:question_from_other_user) { create(:question, user: other_user) }
   let(:questions) { create_list(:question, 2, user: user) }
   
   describe 'GET #index' do
@@ -64,7 +66,7 @@ RSpec.describe QuestionsController, type: :controller do
     sign_in_user
     context 'with valid attributes' do
       
-      it 'saves new question in database'do
+      it 'saves new question in database' do
         expect { post :create, question: attributes_for(:question) }.to change(Question, :count).by(1)
       end
       
@@ -127,13 +129,18 @@ RSpec.describe QuestionsController, type: :controller do
     end
 
     describe 'DELETE #destroy' do
-      sign_in_user
-      before { question }
+
+      before { sign_in question.user }
       
       it 'deletes question' do
         expect { delete :destroy , id: question }.to change(Question, :count).by(-1)
       end
 
+      it 'can\'t delete question of another user' do
+        question_from_other_user 
+        expect { delete :destroy , id: question_from_other_user }.to_not change(Question, :count)
+      end
+      
       it 'redirect to index view' do
         delete :destroy, id: question
         expect(response).to redirect_to questions_path
