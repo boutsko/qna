@@ -35,15 +35,10 @@ class QuestionsController < ApplicationController
   end
 
   def destroy
-    if @question.user_id == current_user.id
-      @question.destroy!
-      redirect_to root_path, notice: 'Question destroyed'
-    else
-      flash[:notice] = "You didn't create this question, can't destroy it"
-      render :show
-    end
+    @question.destroy!
+    redirect_to questions_path, notice: 'Question destroyed'
   end
-  
+
   private
   
   def load_question

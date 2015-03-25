@@ -1,4 +1,3 @@
-#require 'spec_helper'
 require 'rails_helper'
 
 RSpec.describe QuestionsController, type: :controller do
@@ -129,7 +128,7 @@ RSpec.describe QuestionsController, type: :controller do
 
       it 'redirect to index view' do
         delete :destroy, id: question
-        expect(response).to redirect_to question_path
+        expect(response).to redirect_to questions_path
       end
     end
   end
