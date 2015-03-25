@@ -5,9 +5,9 @@ p Answers:
 - @question.answers.each do |answer|
   p
     = answer.body
-    | ,
-      - if current_user.present? and current_user.id == answer.user_id
-      = link_to "Delete Answer", question_answer_path(@question, answer.id), method: :delete 
+    |, 
+    - if current_user.present? and current_user.id == answer.user_id
+    = link_to "Delete Answer", question_answer_path(@question, answer.id), method: :delete 
 
 - if current_user.present? 
   p= link_to "Create Answer", new_question_answer_path(@question)
