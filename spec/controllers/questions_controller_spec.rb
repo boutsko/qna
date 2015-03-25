@@ -72,6 +72,11 @@ RSpec.describe QuestionsController, type: :controller do
         post :create, question: attributes_for(:question)
         expect(response).to redirect_to question_path(assigns(:question))
       end
+
+      it 'makes sure created question is linked to the user' do
+        post :create, question: attributes_for(:question)
+        expect(question.user.id).to eq (user.id)
+      end
     end
 
     context 'with invalid attributes' do
