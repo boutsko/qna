@@ -46,12 +46,6 @@ class QuestionsController < ApplicationController
   end
 
   def question_params
-    params.require(:question).permit(:title, :body)
+    params.require(:question).permit(:title, :body, :user_id)
   end
-
-  # def strong_params
-  #   strong_params = params.require(:question).permit(:title, :body, :id, :user_id)
-  #   strong_params.merge( user_id: current_user.id ) if user_signed_in?
-  # end
 end
-

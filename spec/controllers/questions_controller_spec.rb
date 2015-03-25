@@ -2,12 +2,15 @@ require 'rails_helper'
 
 RSpec.describe QuestionsController, type: :controller do
 
-  let(:question) { create(:question) }
+  let!(:user) { create(:user) }
+  let(:question) { create(:question, user: user) }
+  let(:questions) { create_list(:question, 2, user: user) }
   
   describe 'GET #index' do
-    let(:questions) { create_list(:question, 2) }
-    before { get :index }
 
+    before { get :index }
+    before { questions }
+    
     it 'populates array of all questions' do
       expect(assigns(:questions)).to match_array(questions)
     end
@@ -44,7 +47,6 @@ RSpec.describe QuestionsController, type: :controller do
     end
   end
 
-
   describe 'GET #edit' do
     sign_in_user
     before { get :edit, id: question }
@@ -61,6 +63,7 @@ RSpec.describe QuestionsController, type: :controller do
   describe 'POST #create' do
     sign_in_user
     context 'with valid attributes' do
+      
       it 'saves new question in database'do
         expect { post :create, question: attributes_for(:question) }.to change(Question, :count).by(1)
       end
@@ -133,4 +136,3 @@ RSpec.describe QuestionsController, type: :controller do
     end
   end
 end
-
