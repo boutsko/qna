@@ -34,6 +34,5 @@ and for a question I can see provided answers
     expect(page).to have_content 'question 1 title'
     expect(page).to have_content 'answer 1'
     expect(page).to have_content 'answer 2'
-    save_and_open_page
   end
 end
