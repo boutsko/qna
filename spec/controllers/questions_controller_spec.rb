@@ -63,8 +63,8 @@ RSpec.describe QuestionsController, type: :controller do
   end
 
   describe 'POST #create' do
-    before { sign_in question.user }
-    
+    sign_in_user    
+
     context 'with valid attributes' do
       
       it 'saves new question in database' do
@@ -77,8 +77,8 @@ RSpec.describe QuestionsController, type: :controller do
       end
 
       it 'makes sure created question is linked to the user' do
-        post :create, question: attributes_for(:question)
-        expect(question.user).to eq (subject.current_user)
+        post :create, question: { title: 'test', body: 'test' }
+        expect(assigns(:question).user).to eq subject.current_user
       end
     end
 
