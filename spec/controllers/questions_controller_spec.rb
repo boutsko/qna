@@ -63,7 +63,8 @@ RSpec.describe QuestionsController, type: :controller do
   end
 
   describe 'POST #create' do
-    sign_in_user
+    before { sign_in question.user }
+    
     context 'with valid attributes' do
       
       it 'saves new question in database' do
@@ -77,7 +78,7 @@ RSpec.describe QuestionsController, type: :controller do
 
       it 'makes sure created question is linked to the user' do
         post :create, question: attributes_for(:question)
-        expect(question.user.id).to eq (user.id)
+        expect(question.user).to eq (subject.current_user)
       end
     end
 
@@ -94,7 +95,9 @@ RSpec.describe QuestionsController, type: :controller do
   end
 
   describe 'PATCH #update' do
-    sign_in_user
+
+    before { sign_in question.user }
+
     context 'valid attributes' do
       it 'assigns the requested question to @question' do
         patch :update, id: question, question: attributes_for(:question)
