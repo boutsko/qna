@@ -8,26 +8,34 @@ feature 'User deletes his input', %q{
 
   given!(:author) { create(:user) }
   given!(:other) { create(:user) }
-  given!(:question1) { create(:question, user: author) }
-
+  given!(:question) { create(:question, user: author) }
+  given! (:answer) { create(:answer, question: question, user: author)  }
   scenario 'Authenticated user deletes his question' do
 
     sign_in(author)
-    visit question_path(question1)
+    visit question_path(question)
     click_on 'Delete Question'
     expect(page).to have_text('Question destroyed')
   end
 
   scenario 'Guest tries to delete a question' do
 
-    visit question_path(question1)
+    visit question_path(question)
     expect(page).to_not have_text("Delete Question")
   end
 
   scenario 'Authenticated user tries to delete a question created by another user' do
 
     sign_in(other)
-    visit question_path(question1)
+    visit question_path(question)
     expect(page).to_not have_text("Delete Question")
+  end
+
+  before { answer }
+  
+  scenario 'Other user tries to delete a question created by another user' do
+    sign_in(other)
+    visit question_path(question)
+    expect(page).to_not have_text("Delete Answer")
   end
 end

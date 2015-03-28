@@ -1,16 +1,18 @@
-h1 = @question.title
-h1 = @question.id
+p= @question.title
+/p= @question.id
 p= @question.body
+
+- if current_user.present? and current_user.id == @question.user_id
+  p= link_to "Delete Question", @question, method: :delete 
+
 p Answers:
 - @question.answers.each do |answer|
   p
     = answer.body
     |, 
     - if current_user.present? and current_user.id == answer.user_id
-    = link_to "Delete Answer", question_answer_path(@question, answer.id), method: :delete 
+      = link_to "Delete Answer", question_answer_path(@question, answer.id), method: :delete 
 
 - if current_user.present? 
   p= link_to "Create Answer", new_question_answer_path(@question)
 
-- if current_user.present? and current_user.id == @question.user_id
-  p= link_to "Delete Question", @question, method: :delete 
