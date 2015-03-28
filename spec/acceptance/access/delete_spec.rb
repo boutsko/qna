@@ -38,4 +38,10 @@ feature 'User deletes his input', %q{
     visit question_path(question)
     expect(page).to_not have_text("Delete Answer")
   end
+
+  scenario 'User tries to delete his question' do
+    sign_in(author)
+    visit question_path(question)
+    expect(page).to have_text("Delete Answer")
+  end
 end
