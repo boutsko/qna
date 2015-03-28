@@ -26,9 +26,10 @@ and for a question I can see provided answers
     expect(page).to have_content 'question 2 title'
   end
 
+
   scenario 'A visitor can see all answers for a question' do
 
-    question.answers.create!([{body: 'answer 1'}, {body: 'answer 2', user: user}])
+    question.answers.create!([{body: 'answer 1', user: user}, {body: 'answer 2', user: user}])
     
     visit question_path(question)
     expect(page).to have_content 'question 1 title'

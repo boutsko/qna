@@ -5,7 +5,7 @@ RSpec.describe AnswersController, type: :controller do
   # let!(:other_user) { create(:user) }
   let!(:question) { create(:question) }
   let(:answer) { create(:answer, question: question, user: user) }
-  let(:answers) { create_list(:answer, 2, question: question) }
+  let(:answers) { create_list(:answer, 2, question: question, user: user) }
 
   describe "GET #index" do
     before { get :index, question_id: question }
