@@ -2,8 +2,9 @@ require 'rails_helper'
 
 RSpec.describe AnswersController, type: :controller do
   let!(:user) { create(:user) }
-  let(:question) { create(:question) }
-  let(:answer) { create(:answer, question: question) }
+  # let!(:other_user) { create(:user) }
+  let!(:question) { create(:question) }
+  let(:answer) { create(:answer, question: question, user: user) }
   let(:answers) { create_list(:answer, 2, question: question) }
 
   describe "GET #index" do
@@ -31,6 +32,7 @@ RSpec.describe AnswersController, type: :controller do
   end
 
   describe 'GET #new' do
+    sign_in_user
     before { get :new, question_id: question }
     
     it 'assigns new Answer to @answer ' do
@@ -43,6 +45,7 @@ RSpec.describe AnswersController, type: :controller do
   end
 
   describe 'GET #edit' do
+    sign_in_user
     before { get :edit, id: answer, question_id: question }
 
     it 'assigns requested answer to @answer' do
@@ -88,6 +91,9 @@ RSpec.describe AnswersController, type: :controller do
   end
 
   describe 'PATCH #update' do
+
+    before { sign_in answer.user }
+    
     context 'valid attributes' do
       it 'assigns the requested answer to @answer' do
         patch :update, id: answer, answer: build_attributes(:answer), question_id: question
@@ -121,9 +127,11 @@ RSpec.describe AnswersController, type: :controller do
   end
 
   describe 'DELETE #destroy' do
-    before { answer; question }
+
+    before { sign_in answer.user }
+    before { question; answer  }
     
-    it 'deletes answer' do
+    it 'author deletes answer' do
       expect { delete :destroy , id: answer, question_id: question }.to change(Answer, :count).by(-1)
     end
 
