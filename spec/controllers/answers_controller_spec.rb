@@ -2,7 +2,7 @@ require 'rails_helper'
 
 RSpec.describe AnswersController, type: :controller do
   let!(:user) { create(:user) }
-  # let!(:other_user) { create(:user) }
+  let!(:other_user) { create(:user) }
   let!(:question) { create(:question) }
   let(:answer) { create(:answer, question: question, user: user) }
   let(:answers) { create_list(:answer, 2, question: question, user: user) }
@@ -135,6 +135,16 @@ RSpec.describe AnswersController, type: :controller do
       expect { delete :destroy , id: answer, question_id: question }.to change(Answer, :count).by(-1)
     end
 
+    it 'other user tries to delete answer' do
+      answer1 = Answer.create(
+        body: 'Answer of other user',
+        question: question,
+        user: other_user)
+      expect(answer1).to be_valid
+      
+      expect { delete :destroy , id: answer1, question_id: question }.to_not change(Answer, :count)
+    end
+    
     it 'redirect to index view' do
       delete :destroy, id: answer, question_id: question
       expect(response).to redirect_to question_path(question)
