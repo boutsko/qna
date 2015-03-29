@@ -44,5 +44,6 @@ feature 'User deletes his input', %q{
     visit question_path(question)
     expect(page).to have_text("Delete Answer")
     click_on "Delete Answer"
+    expect(page).to_not have_text("AnswerBody")
   end
 end
