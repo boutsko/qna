@@ -43,5 +43,6 @@ feature 'User deletes his input', %q{
     sign_in(author)
     visit question_path(question)
     expect(page).to have_text("Delete Answer")
+    click_on "Delete Answer"
   end
 end
