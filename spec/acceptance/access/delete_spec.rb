@@ -33,13 +33,13 @@ feature 'User deletes his input', %q{
 
   before { answer }
   
-  scenario 'Other user tries to delete a question created by another user' do
+  scenario 'Other user tries to delete a answer created by another user' do
     sign_in(other)
     visit question_path(question)
     expect(page).to_not have_text("Delete Answer")
   end
 
-  scenario 'User tries to delete his question' do
+  scenario 'User tries to delete his answer' do
     sign_in(author)
     visit question_path(question)
     expect(page).to have_text("Delete Answer")
