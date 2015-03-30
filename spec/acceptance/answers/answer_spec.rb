@@ -10,7 +10,7 @@ feature 'Answer a question', %q{
   given!(:author) { create(:user) }
   given!(:question) { create_list(:question, 2, user: author) }
 
-  scenario 'Authorized user answers a question created by other user' do
+  scenario 'Authorized user answers a question created by other user', js: true do 
 
     sign_in(user)
 
