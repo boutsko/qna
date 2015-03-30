@@ -1,2 +1,5 @@
-h1 Answers#new
-p Find me in app/views/answers/new.html.slim
+= form_for [@question, @answer] do |f|
+  = f.label     :body, 'body'
+  = f.text_area :body
+  = f.submit
+

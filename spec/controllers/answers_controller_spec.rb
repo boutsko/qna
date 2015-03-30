@@ -1,9 +1,11 @@
 require 'rails_helper'
 
 RSpec.describe AnswersController, type: :controller do
-  let(:question) { create(:question) }
-  let(:answer) { create(:answer, question: question) }
-  let(:answers) { create_list(:answer, 2, question: question) }
+  let!(:user) { create(:user) }
+  let!(:other_user) { create(:user) }
+  let!(:question) { create(:question) }
+  let(:answer) { create(:answer, question: question, user: user) }
+  let(:answers) { create_list(:answer, 2, question: question, user: user) }
 
   describe "GET #index" do
     before { get :index, question_id: question }
@@ -30,6 +32,7 @@ RSpec.describe AnswersController, type: :controller do
   end
 
   describe 'GET #new' do
+    sign_in_user
     before { get :new, question_id: question }
     
     it 'assigns new Answer to @answer ' do
@@ -42,6 +45,7 @@ RSpec.describe AnswersController, type: :controller do
   end
 
   describe 'GET #edit' do
+    sign_in_user
     before { get :edit, id: answer, question_id: question }
 
     it 'assigns requested answer to @answer' do
@@ -54,6 +58,9 @@ RSpec.describe AnswersController, type: :controller do
   end
 
   describe 'POST #create' do
+
+    sign_in_user
+    
     context 'with valid attributes' do
       it 'saves new answer in database'do
         expect { post :create, answer: build_attributes(:answer), question_id: question }.to change(question.answers, :count).by(1)
@@ -62,6 +69,10 @@ RSpec.describe AnswersController, type: :controller do
         post :create, answer: build_attributes(:answer), question_id: question
         expect(response).to redirect_to question_answer_path(assigns(:question), assigns(:answer))
       end
+      it 'expects the answer belongs to the user' do
+        post :create, answer: build_attributes(:answer), question_id: question
+        expect(assigns(:answer).user).to eq subject.current_user
+      end
     end
 
     context 'with invalid attributes' do
@@ -69,7 +80,6 @@ RSpec.describe AnswersController, type: :controller do
       before { answer; question }
       
       it 'does not save the answer' do
-        #        expect { post :create, answer: build_attributes(:invalid_answer), question_id: question }.to_not change(question.answers, :count)
         expect { post :create, answer: build_attributes(:invalid_answer), question_id: question }.to_not change(Answer, :count)
       end
 
@@ -81,6 +91,9 @@ RSpec.describe AnswersController, type: :controller do
   end
 
   describe 'PATCH #update' do
+
+    before { sign_in answer.user }
+    
     context 'valid attributes' do
       it 'assigns the requested answer to @answer' do
         patch :update, id: answer, answer: build_attributes(:answer), question_id: question
@@ -105,7 +118,7 @@ RSpec.describe AnswersController, type: :controller do
 
       it 'does not change answer attributes' do
         answer.reload
-        expect(answer.body).to eq 'MyText'
+        expect(answer.body).to eq 'AnswerBody'
       end
       it 're-renders edit view' do
         expect(response).to render_template :edit
@@ -114,15 +127,26 @@ RSpec.describe AnswersController, type: :controller do
   end
 
   describe 'DELETE #destroy' do
-    before { answer; question }
+
+    before { sign_in answer.user }
+    before { question; answer  }
     
-    it 'deletes answer' do
+    it 'author deletes answer' do
       expect { delete :destroy , id: answer, question_id: question }.to change(Answer, :count).by(-1)
     end
 
+    it 'other user tries to delete answer' do
+      answer1 = Answer.create(
+        body: 'Answer of other user',
+        question: question,
+        user: other_user)
+
+      expect { delete :destroy , id: answer1, question_id: question }.to_not change(Answer, :count)
+    end
+    
     it 'redirect to index view' do
       delete :destroy, id: answer, question_id: question
-      expect(response).to redirect_to question_answer_path(question, answer)
+      expect(response).to redirect_to question_path(question)
     end
   end
 end
