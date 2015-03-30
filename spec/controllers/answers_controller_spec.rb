@@ -63,14 +63,14 @@ RSpec.describe AnswersController, type: :controller do
     
     context 'with valid attributes' do
       it 'saves new answer in database'do
-        expect { post :create, answer: build_attributes(:answer), question_id: question }.to change(question.answers, :count).by(1)
+        expect { post :create, answer: build_attributes(:answer), question_id: question, format: :js }.to change(question.answers, :count).by(1)
       end
-      it 'redirects to show view' do
-        post :create, answer: build_attributes(:answer), question_id: question
-        expect(response).to redirect_to question_answer_path(assigns(:question), assigns(:answer))
+      it 'render create template' do
+        post :create, answer: build_attributes(:answer), question_id: question, format: :js
+        expect(response).to render_template :create
       end
       it 'expects the answer belongs to the user' do
-        post :create, answer: build_attributes(:answer), question_id: question
+        post :create, answer: build_attributes(:answer), question_id: question, format: :js
         expect(assigns(:answer).user).to eq subject.current_user
       end
     end
