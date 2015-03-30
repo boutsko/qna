@@ -18,8 +18,9 @@ feature 'Answer a question', %q{
 #    click_on 'Create Answer'
     fill_in 'Your answer', with: 'text text'
     click_on 'Create Answer'
-    expect(page).to have_content 'text text'
-
+    within '.answers' do
+      expect(page).to have_content 'text text'
+    end
   end
 
   scenario 'Guest can\'t answer questons' do
