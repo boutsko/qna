@@ -15,8 +15,8 @@ feature 'Answer a question', %q{
     sign_in(user)
 
     visit question_path(question)
-    click_on 'Create Answer'
-    fill_in 'body', with: 'text text'
+#    click_on 'Create Answer'
+    fill_in 'Your answer', with: 'text text'
     click_on 'Create Answer'
     expect(page).to have_content 'text text'
 
