@@ -140,8 +140,7 @@ RSpec.describe AnswersController, type: :controller do
         body: 'Answer of other user',
         question: question,
         user: other_user)
-      expect(answer1).to be_valid
-      
+
       expect { delete :destroy , id: answer1, question_id: question }.to_not change(Answer, :count)
     end
     
