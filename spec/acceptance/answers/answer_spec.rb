@@ -15,11 +15,21 @@ feature 'Answer a question', %q{
     sign_in(user)
 
     visit question_path(question)
-#    click_on 'Create Answer'
-    fill_in 'Your answer', with: 'text text'
+
+    fill_in 'Your answer', with: 'first answer text'
+    click_on 'Create Answer'
+    within '.last_answer' do
+      expect(page).to have_content 'first answer text'
+    end      
+
+    click_on 'Create Answer'
+    fill_in 'Your answer', with: 'second answer text'
     click_on 'Create Answer'
     within '.answers' do
-      expect(page).to have_content 'text text'
+      expect(page).to have_content 'first answer text'
+    end
+    within '.last_answer' do
+      expect(page).to have_content 'second answer text'
     end
   end
 
