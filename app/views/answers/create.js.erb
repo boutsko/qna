@@ -1,3 +1,4 @@
 $('.answers').html('<%= j render 'questions/answers' %>');
-$('.last_answer').html('<h3>Last answer : </h3><%= @answer.body %><%= link_to "Delete Answer", question_answer_path(@question, @answer.id), method: :delete %>');
+$('.last_answer').html('<%= j render 'answers/last_answer' %>');
+//$('.last_answer').html('<%= "test" %>');
 $('#answer_body').val('');
