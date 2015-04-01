@@ -1,7 +1,7 @@
 - @question.answers.each do |answer|
 
   p
-    - if answer.id != @answer.id
+    - if answer.id == @answer.id
       = answer.body 
       |, 
       - if current_user.present? and current_user.id == answer.user_id

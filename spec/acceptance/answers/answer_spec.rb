@@ -18,13 +18,13 @@ feature 'Answer a question', %q{
 
     fill_in 'Your answer', with: 'first answer text'
     click_on 'Create Answer'
-    within '.last_answer' do
+    within '.answers' do
       expect(page).to have_content 'first answer text'
     end
   end
 
-  scenario 'Guest can\'t answer questons' do
+  scenario 'Guest can\'t answer questons' do  
     visit questions_path
     expect(page).to_not have_content 'Create Answer'
-  end
+  end 
 end
