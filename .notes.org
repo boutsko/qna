@@ -1,0 +1,92 @@
+
+* change buttom, new_record? vs persisted?
+
+Однако меняются свойства кнопки, когда это #new - кнопка 'Create
+answer', а когда это #edit кнопка дожна стать 'Save'
+
+Для любого объекта мы можем вызвать метод new_record?, который
+вернет true, если объект не был сохранен в БД или его
+противоположность - метод persisted?, который вернет true, если
+объект уже был сохранен в базе. Используя эти методы, можно легко
+определить, какое название должно быть у кнопки.
+
+Кстати, говоря, рельсы внутри используют эти методы для того, чтобы
+определить, отправлять запрос на create или на update.
+
+* remotipart
+
+Remotipart is a Ruby on Rails gem enabling AJAX file uploads with
+jQuery in Rails 3 and Rails 4 remote forms. This gem augments the
+native Rails jQuery remote form functionality enabling asynchronous
+file uploads with little to no modification to your application.
+
+* FactoryGirl
+** наследование фабрик (вложенные фабрики)
+** создание фабрики с полиморфными приложениями (attachments)
+
+given(:question) { create(:question_with_attachment) }
+given(:file) { question.attachments.first }
+
+* Partials
+** shared partials -- список приложенных файлов и к вопросам и ответам выводится через один partial
+** в app/views/questions/show теперь вообще всего 4 строчки
+
+* после обновление ответа обновляется только одна соотв. строка в списке ответов, а не перерисовывается весь список ответов
+
+$('#answer_<%= @answer.id %>').replaceWith('<%= j render @answer %>')
+
+
+
+* Short notation "get :best, on: :member"
+
+[anatoly_cmdx]
+anatoly_cmdxАнатолий
+30 мар
+
+Ну, вроде как "GET methods should NEVER change the resource"
+
+Тогда уж правильнее будет использовать "get :best, on: :member", не?
+Ответить в новой связанной теме
+[vkurennov]
+vkurennovVitaly Kurennov
+30 мар
+
+Само собой, там не get должен быть. Но я в ответе просто показал, как
+сделать более компактную запись роутов на основе того примера, который
+был. А ниже @dementiev_vm абсолютно врено написал, что там должен быть
+post или patch
+
+
+* quetions/_ansewers.html.slim
+
+| Ответы
+- @question.answers.where(best: false).each do |answer|
+  p
+    = answer.body
+    p Файлы:
+    ul
+      - answer.attachments.each do |a|
+        li= link_to a.file.identifier, a.file.url
+    |  --
+    = link_to "Редактировать", "", class: "edit-answer-link", data: { answer_id: answer.id } unless current_user.nil? or current_user.id != answer.user_id
+    |  --
+    = link_to "Удалить", question_answer_path(@question, answer), method: :delete, remote: true unless current_user.nil? or current_user.id != answer.user_id
+    |  --
+    = link_to "best", best_question_answer_path(@question, answer), remote: true unless current_user.nil? or current_user.id != @question.user_id
+    p
+      = nested_form_for [@question, answer], remote: true, html: {id: "edit-answer-#{answer.id}"} do |f|
+        = f.label :body, 'Answer'
+        = f.text_area :body
+        p
+          = f.fields_for :attachments do |a|
+            - attachment = a.object
+            - if attachment.new_record?
+              = a.label :file
+              = a.file_field :file
+              = a.link_to_remove "Remove this file"
+            - else
+              p
+                = attachment.file.file.filename
+                = link_to "Del file", question_attachment_path(@question, attachment), method: :delete, remote: true
+          p= f.link_to_add "Add file", :attachments
+        = f.submit 'Save'
