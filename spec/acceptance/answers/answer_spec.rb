@@ -18,9 +18,11 @@ feature 'Answer a question', %q{
 
     fill_in 'Your answer', with: 'first answer text'
     click_on 'Create Answer'
+    # sleep 100
     within '.answers' do
+      #      expect(page).to have_content 'first answer text'
       expect(page).to have_content 'first answer text'
-      sleep 10
+      # sleep 10
 #      expect(page).to have_content 'first answer text'
     end
   end
