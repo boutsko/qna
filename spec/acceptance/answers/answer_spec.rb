@@ -20,17 +20,19 @@ feature 'Answer a question', %q{
     click_on 'Create Answer'
     within '.answers' do
       expect(page).to have_content 'first answer text'
-    end
-
-    visit question_path(question)
-
-    fill_in 'Your answer', with: 'last answer text'
-    click_on 'Create Answer'
-    within '.answers' do
-      expect(page).to_not have_content 'first answer text'
-      expect(page).to have_content 'last answer text'
+      sleep 10
+#      expect(page).to have_content 'first answer text'
     end
   end
+  #   visit question_path(question)
+
+  #   fill_in 'Your answer', with: 'last answer text'
+  #   click_on 'Create Answer'
+  #   within '.answers' do
+  #     expect(page).to_not have_content 'first answer text'
+  #     expect(page).to have_content 'last answer text'
+  #   end
+  # end
 
   scenario 'Guest can\'t answer questons' do  
     visit questions_path
