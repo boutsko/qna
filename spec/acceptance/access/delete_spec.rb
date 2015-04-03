@@ -9,7 +9,7 @@ feature 'User deletes his input', %q{
   given!(:author) { create(:user) }
   given!(:other) { create(:user) }
   given!(:question) { create(:question, user: author) }
-  given! (:answer) { create(:answer, question: question, user: author)  }
+  given (:answer) { create(:answer, body: "egg or chicken?", question: question, user: author)  }
 
   scenario 'Authenticated user deletes his question', js: true do
 
@@ -43,9 +43,6 @@ feature 'User deletes his input', %q{
   scenario 'User tries to delete his answer', js: true do
     sign_in(author)
     visit question_path(question)
-    fill_in 'Your answer', with: 'egg or hen?'
-    click_on 'Create Answer'
-    sleep 1
     expect(page).to have_text("Delete Answer")
     click_on "Delete Answer"
     expect(page).to_not have_text("egg")
