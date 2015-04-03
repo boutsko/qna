@@ -6,9 +6,7 @@ p= @question.body
 
 h3 Answers:
 .answers 
-  = render @question.answers
-
-              
+  = render @question.answers              
 
 = form_for [@question, @answer], remote: true do |f|
   = f.label     :body, 'Your answer'

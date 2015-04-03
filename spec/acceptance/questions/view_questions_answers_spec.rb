@@ -27,11 +27,12 @@ and for a question I can see provided answers
   end
 
 
-  scenario 'A visitor can see all answers for a question' do
+  scenario 'A visitor can see all answers for a question', js:true do
 
     question.answers.create!([{body: 'answer 1', user: user}, {body: 'answer 2', user: user}])
     
-    visit question_path(question)
+    visit questions_path
+    sleep 10
     expect(page).to have_content 'question 1 title'
     expect(page).to have_content 'answer 1'
     expect(page).to have_content 'answer 2'
