@@ -32,4 +32,10 @@ and for a question I can see provided answers
     expect(page).to have_content 'answer 1'
     expect(page).to have_content 'answer 2'
   end
+
+  scenario 'Visitor can\'t answer question' do
+    question.answers.create!([{body: 'answer 1 loaded', user: user}, {body: 'answer 2 loaded', user: user}])
+    visit question_path(question)
+    expect(page).to_not have_content 'Your'
+  end
 end
