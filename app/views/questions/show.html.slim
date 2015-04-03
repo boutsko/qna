@@ -1,14 +1,14 @@
 p= @question.title
 p= @question.body
 
-- if current_user.present? and current_user.id == @question.user_id
+- if current_user.present? && current_user.id == @question.user_id
   p= link_to "Delete Question", @question, method: :delete
 
 h3 Answers:
 .answers
   = render @question.answers
 
-- if current_user.present? and current_user.id == @question.user_id
+- if current_user.present?
   = form_for [@question, @answer], remote: true do |f|
     = f.label     :body, 'Your answer'
     = f.text_area :body
