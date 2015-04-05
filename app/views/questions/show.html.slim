@@ -6,7 +6,13 @@ p= @question.body
 
 h3 Answers:
 .answers
-  = render @question.answers
+  - @question.answers.each do |answer|
+    p= answer.body
+
+/  = render question.answers
+/  = render @question.answers
+
+
 
 - if current_user.present?
   = form_for [@question, @answer], remote: true do |f|

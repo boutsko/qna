@@ -31,5 +31,14 @@ feature 'Answer question', %q{
   scenario 'Guest can\'t answer questons' do  
     visit questions_path
     expect(page).to_not have_content 'Create Answer'
-  end 
+  end
+
+  scenario 'User tries to create invalid answer', js: true do
+    sign_in user
+    visit question_path(question)
+save_and_open_page
+    click_on 'Create Answer'
+
+    expect(page).to have_content "Body can't be blank"
+  end
 end
