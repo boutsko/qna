@@ -1,18 +1,15 @@
 p= @question.title
-/p= @question.id
 p= @question.body
 
-- if current_user.present? and current_user.id == @question.user_id
-  p= link_to "Delete Question", @question, method: :delete 
+- if current_user.present? && current_user.id == @question.user_id
+  p= link_to "Delete Question", @question, method: :delete
 
-p Answers:
-- @question.answers.each do |answer|
-  p
-    = answer.body
-    |, 
-    - if current_user.present? and current_user.id == answer.user_id
-      = link_to "Delete Answer", question_answer_path(@question, answer.id), method: :delete 
+h3 Answers:
+.answers
+  = render @question.answers
 
-- if current_user.present? 
-  p= link_to "Create Answer", new_question_answer_path(@question)
-
+- if current_user.present?
+  = form_for [@question, @answer], remote: true do |f|
+    = f.label     :body, 'Your answer'
+    = f.text_area :body
+    = f.submit
