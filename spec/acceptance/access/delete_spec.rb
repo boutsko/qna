@@ -1,4 +1,4 @@
-require 'rails_helper'
+require 'acceptance_helper'
 
 feature 'User deletes his input', %q{
  to delete my questions and answers

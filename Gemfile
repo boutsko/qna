@@ -43,9 +43,6 @@ group :development, :test do
 
   # Spring speeds up development by keeping your application running in the background. Read more: https://github.com/rails/spring
   gem 'spring'
-  gem 'database_cleaner'
-  gem 'selenium-webdriver'
-  gem 'database_cleaner'
 end
 
 gem 'slim-rails'
@@ -53,6 +50,10 @@ gem 'slim-rails'
 group :test, :development do
   gem 'rspec-rails'
   gem 'factory_girl_rails'
+  gem 'capybara'
+  gem 'launchy'
+  gem 'database_cleaner'
+  gem 'capybara-webkit'
 end
 
 group :development do
@@ -60,9 +61,7 @@ group :development do
     gem 'guard-rspec'
 end
 
-
 group :test do
   gem 'shoulda-matchers'
-  gem 'capybara', '~> 2.3.0'
-  gem 'launchy'
+
 end
