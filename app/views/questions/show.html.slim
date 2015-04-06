@@ -10,6 +10,7 @@ h3 Answers:
 
 - if current_user.present?
   = form_for [@question, @answer], remote: true do |f|
+    .answer-errors
     = f.label     :body, 'Your answer'
     = f.text_area :body
     = f.submit
