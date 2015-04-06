@@ -83,10 +83,6 @@ RSpec.describe AnswersController, type: :controller do
         expect { post :create, answer: build_attributes(:invalid_answer), question_id: question }.to_not change(Answer, :count)
       end
 
-      it 're-renders new view' do
-        post :create, answer: build_attributes(:invalid_answer), question_id: question
-        expect(response).to render_template :new
-      end
     end
   end
 
