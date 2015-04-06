@@ -92,20 +92,27 @@ RSpec.describe AnswersController, type: :controller do
     
     context 'valid attributes' do
       it 'assigns the requested answer to @answer' do
-        patch :update, id: answer, answer: build_attributes(:answer), question_id: question
+        patch :update, id: answer, answer: build_attributes(:answer), question_id: question, format: :js
         expect(assigns(:answer)).to eq answer
       end
 
       it 'changes answer attributes' do
-        patch :update, id: answer, answer: { body: 'new body' }, question_id: question
+        patch :update, id: answer, answer: { body: 'new body' }, question_id: question, format: :js
         answer.reload
         expect(answer.body).to eq 'new body'
       end
 
       it 'redirects to the updated answer' do
-        patch :update, id: answer, answer: { body: 'new body' }, question_id: question
-        answer.reload
-        expect(response).to redirect_to question_answer_path(assigns(:question), assigns(:answer))
+        patch :update, id: answer, answer: build_attributes(:answer), question_id: question, format: :js
+#        patch :update, id: answer, answer: { body: 'new body' }, question_id: question
+        # answer.reload
+        # expect(response).to redirect_to question_answer_path(assigns(:question), assigns(:answer))
+        expect(response).to render_template :update
+      end
+
+      it 'assigns the question' do
+        patch :update, id: answer, answer: build_attributes(:answer), question_id: question, format: :js
+        expect(assigns(:question)).to eq question
       end
     end
 
