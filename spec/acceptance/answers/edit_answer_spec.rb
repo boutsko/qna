@@ -33,13 +33,13 @@ feature 'Answer editing', %q{
       click_on 'Edit'
       within '.answers' do
         fill_in 'Answer', with: 'edited answer'
-        save_and_open_page
-      end
-      click_on 'Save'
+        # save_and_open_page
+        click_on 'Save'
 
-      expect(page).to_not have_content answer.body
-      expect(page).to have_content 'edited answer'
-      expect(page).to_not have_selector 'textarea'
+        expect(page).to_not have_content answer.body
+        expect(page).to have_content 'edited answer'
+        expect(page).to_not have_selector 'textarea'
+      end
     end
     
     scenario 'tries to edit other user\'s question' do
