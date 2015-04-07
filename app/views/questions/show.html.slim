@@ -6,7 +6,7 @@ p= @question.body
 
 h3 Answers:
 .answers
-  = render @question.answers
+  = render 'questions/answers'
 
 - if current_user.present?
   = form_for [@question, @answer], remote: true do |f|

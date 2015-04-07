@@ -28,7 +28,8 @@ feature 'Answer editing', %q{
       end
     end
 
-    scenario 'try to edit his answer' do
+    scenario 'try to edit his answer', js: true do
+      save_and_open_page
       click_on 'Edit'
       within '.answers' do
         fill_in 'Answer', with: 'edited answer'

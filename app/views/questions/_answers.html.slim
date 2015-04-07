@@ -1,0 +1,14 @@
+- @question.answers.each do |answer|
+  - id = answer.id
+  div class="answer" id="answer_#{id}"
+    p = answer.body  
+    - if user_signed_in?
+      = link_to "Delete Answer"
+      span =>
+      = link_to "Edit Answer"
+  
+    p 
+      = form_for [@question, answer], remote: true do |f|
+        = f.label :body, "Answer"
+        = f.text_area :body
+        = f.submit 'Save'

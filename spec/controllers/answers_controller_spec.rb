@@ -102,7 +102,7 @@ RSpec.describe AnswersController, type: :controller do
         expect(answer.body).to eq 'new body'
       end
 
-      it 'redirects to the updated answer' do
+      it 'renders update template' do
         patch :update, id: answer, answer: build_attributes(:answer), question_id: question, format: :js
 #        patch :update, id: answer, answer: { body: 'new body' }, question_id: question
         # answer.reload

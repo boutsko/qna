@@ -30,7 +30,7 @@ class AnswersController < ApplicationController
 
   def update
     if @answer.update(answer_params)
-      redirect_to question_answer_path(@question, @answer)
+#      redirect_to question_answer_path(@question, @answer)
     else
       render :edit
     end
