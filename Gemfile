@@ -46,6 +46,7 @@ group :development, :test do
 end
 
 gem 'slim-rails'
+gem 'jquery-turbolinks'
 
 group :test, :development do
   gem 'rspec-rails'
