@@ -43,8 +43,8 @@ feature 'User deletes his input', %q{
   scenario 'User tries to delete his answer', js: true do
     sign_in(author)
     visit question_path(question)
-    expect(page).to have_text("Delete Answer")
-    click_on "Delete Answer"
+    expect(page).to have_text("Delete")
+    click_on "Delete"
     expect(page).to_not have_text("egg")
   end
 end
