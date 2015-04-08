@@ -104,9 +104,6 @@ RSpec.describe AnswersController, type: :controller do
 
       it 'renders update template' do
         patch :update, id: answer, answer: build_attributes(:answer), question_id: question, format: :js
-#        patch :update, id: answer, answer: { body: 'new body' }, question_id: question
-        # answer.reload
-        # expect(response).to redirect_to question_answer_path(assigns(:question), assigns(:answer))
         expect(response).to render_template :update
       end
 
@@ -117,7 +114,7 @@ RSpec.describe AnswersController, type: :controller do
     end
 
     context 'invalid attributes' do
-      before { patch :update, id: answer, answer: { body: nil }, question_id: question }
+      before { patch :update, id: answer, format: :js, answer: { body: nil }, question_id: question }
 
       it 'does not change answer attributes' do
         answer.reload
@@ -135,7 +132,7 @@ RSpec.describe AnswersController, type: :controller do
     before { question; answer  }
     
     it 'author deletes answer' do
-      expect { delete :destroy , id: answer, question_id: question }.to change(Answer, :count).by(-1)
+      expect { delete :destroy , id: answer, format: :js, question_id: question }.to change(Answer, :count).by(-1)
     end
 
     it 'other user tries to delete answer' do
@@ -144,12 +141,12 @@ RSpec.describe AnswersController, type: :controller do
         question: question,
         user: other_user)
 
-      expect { delete :destroy , id: answer1, question_id: question }.to_not change(Answer, :count)
+      expect { delete :destroy , id: answer1, question_id: question, format: :js }.to_not change(Answer, :count)
     end
     
-    it 'redirect to index view' do
-      delete :destroy, id: answer, question_id: question
-      expect(response).to redirect_to question_path(question)
+    it 'render destroy template' do
+      delete :destroy, id: answer, format: :js, question_id: question
+      expect(response).to render_template :destroy
     end
   end
 end
