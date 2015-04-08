@@ -6,7 +6,7 @@
       - if user_signed_in?
         = link_to "Delete"
         span =>
-        = link_to "Edit", '#edit', class: 'edit-answer-link', data: { answer_id: answer.id }
+        = link_to "Edit", '', class: 'edit-answer-link', data: { answer_id: answer.id }
         / = link_to 'Edit answer', '#edit', id: "edit_#{ answer.id }", class: 'edit_answer_link' 
         / = link_to 'Delete answer', answer, id: "del_#{ answer.id }", method: :delete, remote: true
   
