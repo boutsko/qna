@@ -36,4 +36,3 @@ feature 'Best Answer', %q{
   end
 
 end
-
