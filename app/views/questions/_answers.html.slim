@@ -3,7 +3,7 @@
     - id = answer.id
     div class="answer" id="answer_#{id}"
       p = answer.body  
-      - if user_signed_in?
+      - if user_signed_in? && current_user.id == answer.user_id
         = link_to "Delete", [@question, answer], method: :delete, remote: true
         span =>
         = link_to "Edit", '', class: 'edit-answer-link', data: { answer_id: answer.id }

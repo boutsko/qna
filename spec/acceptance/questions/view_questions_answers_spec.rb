@@ -9,13 +9,10 @@ and for a question I can see provided answers
 
   
   given!(:user) { create(:user) }
-  # given!(:question) { create(:question, user: user) }
   given!(:question) { create(:question, title: "question 1 title", body: "question 1 body",  user: user) }
-  # given!(:answer) { create(:answer, question: question) }
 
   scenario 'A visitor can see all questions' do
 
-    # create(:question, title: question1_title, user: user)
     create(:question, title: 'question 2 title', user: user)
 
     visit questions_path

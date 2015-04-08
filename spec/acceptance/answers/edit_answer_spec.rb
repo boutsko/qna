@@ -8,8 +8,8 @@ feature 'Answer editing', %q{
 
   given!(:author) { create(:user) }
   given!(:question) { create(:question, user: author) }
-  given!(:answer) { create(:answer, question: question) }
-
+  given!(:answer) { create(:answer, question: question, user: author) }
+  
   scenario 'Unauthenticated user tries to edit question' do
     visit  question_path(question)
     expect(page).to_not have_link 'Edit'
@@ -32,15 +32,24 @@ feature 'Answer editing', %q{
       within '.answers' do
         fill_in 'Answer', with: 'edited answer'
         click_on 'Save'
-
-     save_and_open_page
         expect(page).to_not have_content answer.body
         expect(page).to have_content 'edited answer'
         expect(page).to_not have_selector 'textarea'
       end
     end
-    
-    scenario 'tries to edit other user\'s question' do
-    end 
   end
+
+  describe "Different user" do
+    before do
+      user1 = create(:user)
+      sign_in user1
+      visit question_path(question)
+    end        
+
+    scenario 'tries to edit other user\'s question', js: true do
+      expect(page).to_not have_content 'Delete'
+      expect(page).to_not have_content 'Edit'
+    end
+  end 
 end
+
