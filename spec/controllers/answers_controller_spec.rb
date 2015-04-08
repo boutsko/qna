@@ -102,13 +102,6 @@ RSpec.describe AnswersController, type: :controller do
         expect(answer.body).to eq 'new body'
       end
 
-      it 'changes answer to be the best one' do
-        patch :update, id: answer, answer: { best: true }, question_id: question, format: :js
-        answer.reload
-        expect(answer.best).to be_true
-      end
-
-      
       it 'renders update template' do
         patch :update, id: answer, answer: build_attributes(:answer), question_id: question, format: :js
         expect(response).to render_template :update

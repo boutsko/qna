@@ -1,8 +1,9 @@
 class AnswersController < ApplicationController
   before_action :authenticate_user!, except: [ :index, :show ]
   before_action :load_question
-  before_action :load_answer, only: [ :show, :edit, :update, :destroy ]
-  before_action :user_created_answer?, only: [:update, :destroy]
+  before_action :load_answer, only: [ :show, :edit, :update, :destroy, :best ]
+  before_action :user_created_answer?, only: [ :update, :destroy ]
+  before_action :user_created_question?, only: [:best]
   
   def index
     @answers = @question.answers
@@ -37,6 +38,11 @@ class AnswersController < ApplicationController
 
   end
 
+  def best
+    @answers = @answer.question.answers
+    @answer.make_best
+  end
+  
   def destroy
     @answer.destroy
    # redirect_to question_path(@question)
@@ -55,6 +61,12 @@ class AnswersController < ApplicationController
   def user_created_answer?
     if @answer.user_id != current_user.id
       redirect_to @question, notice: 'Answer can be modified/deleted strictly by its author only'
+    end
+  end
+
+  def user_created_question?
+    unless @answer.question.user_id == current_user.id
+      render status: 403, text: "Only author of question can mark best answer"
     end
   end
   

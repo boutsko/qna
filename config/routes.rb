@@ -1,9 +1,13 @@
 Rails.application.routes.draw do
   devise_for :users
   resources :questions do
-    resources :answers
+    resources :answers do
+      member { patch 'best' }
+    end
   end
 
+  #patch '/questions/answer/best' => 'answer#best'
+  
   root to: "questions#index"
 
   # The priority is based upon order of creation: first created -> highest priority.
