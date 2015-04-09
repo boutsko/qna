@@ -39,7 +39,7 @@ class AnswersController < ApplicationController
   end
 
   def best
-#   @answers = @answer.question.answers
+    @answers = @answer.question.answers
     @answer.make_best
   end
   
