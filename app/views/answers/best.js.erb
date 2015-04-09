@@ -1,11 +1,9 @@
 <% if @answer.errors.present? %>
     <% @answer.errors.full_messages.each do |message| %>
-        flash('danger', '<%= message %>');
-    <% end %>
-
+        $('.answer-errors').html('<%= j message %>');
+   <% end %>
 <% else %>
-    flash('success', 'Answer mark as best');
-    answersCount(<%= @answers.count %>);
-    $('.answers').html('<%= j render @answers %>');
-    editAnswer()
+   flash('success', 'This answer is best now');				
+   $('.answers').html('<%= j render 'questions/answers' %>');
 <% end %>
+

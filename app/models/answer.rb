@@ -4,10 +4,11 @@ class Answer < ActiveRecord::Base
   
   validates :body, presence: true
 
-  default_scope { order(created_at: :asc) }
+  default_scope { order(best: :desc, created_at: :asc) }
+#  default_scope { order(created_at: :asc) }
 
   def make_best
-    self.question.answers.update_all(best: false)
+    # self.question.answers.update_all(best: false)
     self.update(best: true)
   end
   

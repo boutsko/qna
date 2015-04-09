@@ -2,14 +2,18 @@
   - if answer.persisted?
     - id = answer.id
     div class="answer" id="answer_#{id}"
-      p = answer.body  
+      p = answer.body 
+      - if answer.best
+        p = 'The best answer!'
+      - else
+        - if current_user == @question.user
+          = link_to "Best", '', class: 'best-answer-link', data: { answer_id: answer.id }
+          span =>
       - if user_signed_in? && current_user.id == answer.user_id
         = link_to "Delete", [@question, answer], method: :delete, remote: true
         span =>
         = link_to "Edit", '', class: 'edit-answer-link', data: { answer_id: answer.id }
-        / = link_to 'Edit answer', '#edit', id: "edit_#{ answer.id }", class: 'edit_answer_link' 
-        / = link_to 'Delete answer', answer, id: "del_#{ answer.id }", method: :delete, remote: true
-  
+        
         p 
           = form_for [@question, answer], remote: true, html: { id: "edit-answer-#{answer.id}"} do |f|
             = f.label :body, "Answer"
