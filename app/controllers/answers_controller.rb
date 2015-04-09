@@ -1,9 +1,9 @@
 class AnswersController < ApplicationController
   before_action :authenticate_user!, except: [ :index, :show ]
   before_action :load_question
-  before_action :load_answer, only: [ :show, :edit, :update, :destroy ]
+  before_action :load_answer, only: [ :show, :edit, :update, :destroy, :best ]
   before_action :user_created_answer?, only: [ :update, :destroy ]
-#  before_action :user_created_question?, only: [:best]
+  before_action :user_created_question?, only: [:best]
   
   def index
     @answers = @question.answers

@@ -1,8 +1,11 @@
 Rails.application.routes.draw do
   devise_for :users
-  resources :questions do
+
+    resources :questions do
     resources :answers do
-      member { patch 'best' }
+      member do
+        patch 'best'
+      end        
     end
   end
 

@@ -3,7 +3,5 @@
         $('.answer-errors').html('<%= j message %>');
    <% end %>
 <% else %>
-   flash('success', 'This answer is best now');				
    $('.answers').html('<%= j render 'questions/answers' %>');
 <% end %>
-
