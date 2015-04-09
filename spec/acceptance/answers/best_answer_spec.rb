@@ -19,11 +19,10 @@ feature 'Best Answer', %q{
       visit question_path(question)
     end
     
-    scenario "marks an answer as the best one" do
-      save_and_open_page
+    scenario "marks an answer as the best one", js: true do
       click_on "Best"
 
-      expect(page).to have_content "Best question selected"
+      expect(page).to have_content("The best answer!", count: 1)
     end
   end
   
