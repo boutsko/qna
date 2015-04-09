@@ -22,20 +22,11 @@ class AnswersController < ApplicationController
   def create
     @answer = @question.answers.build(answer_params)
     @answer.user = current_user
-    if @answer.save
-    # redirect_to question_answer_path(@question, @answer)
-    else
-    # render :new
-    end
+    @answer.save
   end
 
   def update
-    if @answer.update(answer_params)
-#      redirect_to question_answer_path(@question, @answer)
-    else
-      render :edit
-    end
-
+    @answer.update(answer_params)
   end
 
   def best
@@ -45,7 +36,6 @@ class AnswersController < ApplicationController
   
   def destroy
     @answer.destroy
-   # redirect_to question_path(@question)
   end
 
   private

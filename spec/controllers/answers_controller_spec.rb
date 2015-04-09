@@ -120,9 +120,6 @@ RSpec.describe AnswersController, type: :controller do
         answer.reload
         expect(answer.body).to eq 'AnswerBody'
       end
-      it 're-renders edit view' do
-        expect(response).to render_template :edit
-      end
     end
   end
 
