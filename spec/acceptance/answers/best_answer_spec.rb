@@ -21,8 +21,9 @@ feature 'Best Answer', %q{
     
     scenario "marks an answer as the best one", js: true do
       click_on "Best"
-
-      expect(page).to have_content("The best answer!", count: 1)
+      within "#answer_#{answer.id}" do
+        expect(page).to have_content("The best answer!", count: 1)
+      end
     end
   end
   
