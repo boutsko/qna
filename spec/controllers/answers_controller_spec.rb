@@ -123,6 +123,22 @@ RSpec.describe AnswersController, type: :controller do
     end
   end
 
+  describe 'PATCH #best' do
+
+    before do
+      sign_in question.user
+    end
+    
+    context 'Question\'s author' do
+      
+      it 'changes answer to be the best one' do
+        patch :best, id: answer, question_id: question, format: :js
+        answer.reload 
+        expect(answer.best).to be true 
+      end 
+    end
+  end
+  
   describe 'DELETE #destroy' do
 
     before { sign_in answer.user }
