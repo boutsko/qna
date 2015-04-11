@@ -4,4 +4,6 @@ class Question < ActiveRecord::Base
   has_many :attachments
 
   validates :title, :body, :user,  presence: true
+  
+  accepts_nested_attributes_for :attachments
 end
