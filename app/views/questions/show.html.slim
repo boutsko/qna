@@ -1,5 +1,9 @@
 p= @question.title
 p= @question.body
+p Attachments:
+ul
+  - @question.attachments.each do |a|
+    li= a.file.file.filename
 
 - if current_user.present? && current_user.id == @question.user_id
   p= link_to "Delete Question", @question, method: :delete
