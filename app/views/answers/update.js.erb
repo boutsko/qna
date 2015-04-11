@@ -1,9 +1,3 @@
-$('#answer_<%= @answer.id %>').html('<%= j render 'answers/answer', answer: @answer %>');
-$('.edit-answer-link').click(function(e) {
-   e.preventDefault();
-   $(this).hide();
-   answer_id = $(this).data('answerId');
-   $('form#edit-answer-' + answer_id).show();
-});
+$('#answer_<%= @answer.id %>').replaceWith('<%= j render @answer %>');
 
 
