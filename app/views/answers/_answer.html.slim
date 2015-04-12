@@ -2,6 +2,10 @@
   - id = answer.id
   div class="answer" id="answer_#{id}"
     p = answer.body 
+    ul
+      - answer.attachments.each do |a|
+        li= link_to a.file.filename, a.file.url
+
     - if answer.best?
       p = 'The best answer!'
     - else

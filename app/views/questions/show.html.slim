@@ -14,7 +14,12 @@ h3 Answers:
 
 - if current_user.present?
   = form_for [@question, @answer], remote: true do |f|
-    .answer-errors
-    = f.label     :body, 'Your answer'
-    = f.text_area :body
-    = f.submit
+    p
+      = f.label     :body, 'Your answer'
+      .answer-errors
+      = f.text_area :body
+    p
+      = f.fields_for :attachments do |a|
+        = a.label :file
+        = a.file_field :file
+    p= f.submit 'Create'
