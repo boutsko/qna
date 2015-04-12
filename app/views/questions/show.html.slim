@@ -1,5 +1,9 @@
 p= @question.title
 p= @question.body
+p Attachments:
+ul
+  - @question.attachments.each do |a|
+      li= link_to a.file.filename, a.file.url
 
 - if current_user.present? && current_user.id == @question.user_id
   p= link_to "Delete Question", @question, method: :delete
@@ -10,6 +14,7 @@ h3 Answers:
 
 - if current_user.present?
   = form_for [@question, @answer], remote: true do |f|
+    .answer-errors
     = f.label     :body, 'Your answer'
     = f.text_area :body
     = f.submit

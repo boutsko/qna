@@ -1,4 +1,4 @@
-require 'rails_helper'
+require 'acceptance_helper'
 
 feature 'Ask question', %q{
   to receive a piece of wisdom form the comunity 

@@ -1,4 +1,4 @@
-require 'rails_helper'
+require 'acceptance_helper'
 
 feature 'Log out a user', %q{
  to complete my interaction with QnA system
