@@ -6,7 +6,8 @@ class Answer < ActiveRecord::Base
   
   validates :body, presence: true
 
-  accepts_nested_attributes_for :attachments
+  # accepts_nested_attributes_for :attachments
+  accepts_nested_attributes_for :attachments, reject_if: proc { |attrib| attrib['file'].nil? }
   
   default_scope { order(best: :desc, created_at: :asc) }
 

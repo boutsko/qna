@@ -41,5 +41,16 @@ feature 'Add files to answer', %q{
       expect(page).to have_link 'spec_helper.rb', href: '/uploads/attachment/file/1/spec_helper.rb'
       expect(page).to have_link 'rails_helper.rb', href: '/uploads/attachment/file/2/rails_helper.rb'
     end
-  end 
+  end
+
+  scenario 'User adds and removes file while creating answer', js: true do
+
+    fill_in 'Your answer', with: 'My answer'
+
+    attach_file 'File', "#{Rails.root}/spec/spec_helper.rb"
+    click_on 'Remove File'
+    click_on 'Create Answer'
+    expect(page).to_not have_link 'spec_helper.rb', href: '/uploads/attachment/file/1/spec_helper.rb'
+  end
+
 end
