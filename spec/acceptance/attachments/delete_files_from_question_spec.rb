@@ -11,7 +11,6 @@ feature 'Author deletes attached files', %q{
   given!(:other_user) { create(:user) }
   given!(:question) { create(:question, user: author) }
   given!(:files) { create_list(:attachment, 2, attachable: question) }
-
   
   background do
   end
@@ -47,7 +46,4 @@ feature 'Author deletes attached files', %q{
     end
   end
 
-  
-  scenario 'Author deletes files added to answer'
-  scenario 'Non-author tries to delete files added to answer'
 end
