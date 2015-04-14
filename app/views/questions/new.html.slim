@@ -10,6 +10,6 @@
     = f.fields_for :attachments do |a|
       = a.label :file
       = a.file_field :file   
-    p = f.link_to_add "Add", :attachments
-  p = f.submit 'Create'
+    p = f.link_to_add "Add file to question", :attachments
+    = f.submit 'Create'
 
