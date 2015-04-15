@@ -1,4 +1,5 @@
 Rails.application.routes.draw do
+
   devise_for :users
 
   resources :questions do
@@ -7,7 +8,9 @@ Rails.application.routes.draw do
     end
   end
 
-  #patch '/questions/answer/best' => 'answer#best'
+
+  resources :attachments, only: [:destroy]
+
   
   root to: "questions#index"
 

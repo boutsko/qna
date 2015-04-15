@@ -6,4 +6,8 @@ class User < ActiveRecord::Base
 
   has_many :questions
   has_many :answers
+
+  def author_of?(obj)
+    obj.user_id = self.id
+  end
 end
