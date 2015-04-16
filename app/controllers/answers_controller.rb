@@ -23,6 +23,11 @@ class AnswersController < ApplicationController
     @answer = @question.answers.build(answer_params)
     @answer.user = current_user
     @answer.save
+
+    respond_to do |format|
+      format.html { render partial: @answer, layout: false }
+      # format.js
+    end
   end
 
   def update

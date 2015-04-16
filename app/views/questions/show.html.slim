@@ -17,7 +17,7 @@ h3 Answers:
   = render @question.answers
 
 - if current_user.present?
-  = nested_form_for [@question, @answer], remote: true do |f|
+  = nested_form_for [@question, @answer], remote: true, data: { type: :html } do |f|
     p
       = f.label     :body, 'Your answer'
       .answer-errors
