@@ -17,4 +17,7 @@ $ -> $('form.new_answer').bind 'ajax:success', (e, data, status, xhr) ->
        $('.answers').append('<p>' + answer.body + '</p>')
        $('.answer-errors').html('')
      .bind 'ajax:error', (e, xhr, status, error) ->
-       $('.answer-errors').html(xhr.responseText)
+       $('.answer-errors').html('')
+       errors = $.parseJSON(xhr.responseText)
+       $.each errors, (index, value) ->
+         $('.answer-errors').append(value)
