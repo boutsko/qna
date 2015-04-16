@@ -22,11 +22,13 @@ class AnswersController < ApplicationController
   def create
     @answer = @question.answers.build(answer_params)
     @answer.user = current_user
-    @answer.save
 
     respond_to do |format|
-      format.html { render partial: @answer, layout: false }
-      # format.js
+      if @answer.save
+        format.html { render partial: @answer, layout: false }
+      else
+        format.html { render text: @answer.errors.full_messages.join("\n"), status: :unprocessable_entity }
+      end
     end
   end
 
