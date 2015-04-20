@@ -33,6 +33,12 @@ $ ->
       $('form#for_answer_edit_' + answer_id).show()
 
 
-  $(document).on 'ajax:success', 'form#new_answer', answer_create
+  answer_create_error = (e, xhr, status, error) ->
+    errors = $.parseJSON(xhr.responseText)
+    $('.answer-errors').empty()
+    $.each errors, (index, value) ->
+      $('.answer-errors').append(value)
 
+  $(document).on 'ajax:success', 'form#new_answer', answer_create
+  $(document).on 'ajax:error', 'form#new_answer', answer_create_error
 
