@@ -10,25 +10,24 @@ feature 'User can vote', %q{
   given (:user) { create(:user) }
   given (:question) { create(:question, user: user) }
   given! (:answer) { create(:answer, question: question) }
-
   
   background do
     sign_in(user)
   end
-    
+  
   scenario 'User can vote for question/answer' do
 
     visit question_path(question)
     expect(page).to have_text question.body
     within "#answer_#{ answer.id }" do
       expect(page).to have_text answer.body
-      expect(page).to have_link 'vote_up'
-      expect(page).to have_link 'vote_down'
-      expect(page).to have_text 'ratio'
+      expect(page).to have_text 'Vote Up'
+      expect(page).to have_text 'Vote Down'
+      # expect(page).to have_text 'ratio'
     end
   end
   
-    
+  
   scenario 'User can not vote for his question/answer'
   scenario 'User can vote for question/answer only once'
   scenario 'User can cancel his vote and re-vote'

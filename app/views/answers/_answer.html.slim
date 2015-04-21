@@ -1,6 +1,11 @@
 - if answer.persisted?
   - id = answer.id
   div class="answer" id="answer_#{id}"
+    span =>
+    = link_to "Vote Up", '', class: 'vote-answer-up-link', data: { answer_id: answer.id }
+    span =>
+    = link_to "Vote Down", '', class: 'vote-answer-down-link', data: { answer_id: answer.id }
+
     p = answer.body 
     ul
       - answer.attachments.each do |a|
