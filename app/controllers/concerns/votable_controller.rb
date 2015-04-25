@@ -3,14 +3,15 @@ module VotableController
 
   included do
     before_action :load_votable_resource, only: [:like, :dislike, :withdraw_vote]
-    before_action :check_user_can_vote, only: [:like, :dislike, :withdraw_vote]
+#    before_action :check_user_can_vote, only: [:like, :dislike, :withdraw_vote]
 
     helper_method :user_can_vote_for
   end
 
   def like
     @votable.liked_by current_user
-    update_votes
+    render 'layouts/votable/update'
+#    update_votes
   end
 
   def downvote
@@ -32,7 +33,7 @@ module VotableController
   private
 
   def load_votable_resource
-    @votable = controller_name.classify.constantinize.find(params[:id])
+    @votable = controller_name.classify.constantize.find(params[:id])
   end
 
   def check_user_can_vote

@@ -1,9 +1,16 @@
 Rails.application.routes.draw do
-
   devise_for :users
 
-  resources :questions do
-    resources :answers do
+  concern :votable do
+    member do
+      patch :like
+      patch :dislike
+      patch :withdraw_vote
+    end
+  end
+  
+  resources :questions, concerns: :votable do
+    resources :answers,  concerns: :votable do
       patch :best, on: :member
     end
   end
