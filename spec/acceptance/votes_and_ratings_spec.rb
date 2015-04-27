@@ -7,23 +7,34 @@ feature 'User can vote', %q{
   I'd like to vote for it
 }, type: :feature, js: true do
 
-  given (:user) { create(:user) }
-  given (:question) { create(:question, user: user) }
-  given! (:answer) { create(:answer, question: question) }
+  given (:question_author) { create(:user) }
+  given (:answer_author) { create(:user) }
+  given (:question) { create(:question, user: question_author) }
+  given! (:answer) { create(:answer, question: question, user: answer_author) }
   
   background do
-    sign_in(user)
+    sign_in(question_author)
   end
   
   scenario 'User can vote for question/answer' do
 
     visit question_path(question)
     expect(page).to have_text question.body
+
     within "#answer_#{ answer.id }" do
       expect(page).to have_text answer.body
-      expect(page).to have_text 'Vote Up'
-      expect(page).to have_text 'Vote Down'
-      # expect(page).to have_text 'ratio'
+      expect(page).to have_text 'Like'
+      expect(page).to have_text 'Dislike'
+      expect(page).to have_text 'Rating is: 0'
+
+      click_link 'Like'
+      expect(page).to have_text 'Rating is: 1'
+      expect(page).to_not have_text 'Like'
+      expect(page).to have_text 'Withdraw'
+
+     click_link 'Withdraw'
+     expect(page).to have_text 'Like'
+     expect(page).to have_text 'Dislike'
     end
   end
   
