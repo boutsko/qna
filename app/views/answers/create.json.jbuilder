@@ -1,7 +1,7 @@
 if @answer.errors.any?
   json.errors @answer.errors.full_messages
 else
-  json.(@answer, :id, :body)
+  json.(@answer, :id, :body, :question_id)
 
   json.attachments @answer.attachments do |attachment|
     json.id attachment.id
