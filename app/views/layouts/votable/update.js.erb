@@ -1,1 +1,1 @@
-$("#rating_<%= model_id @votable %>").replaceWith('<%= "Rating is: #{@votable.rating}" %>');
+$('#<%= model_id @votable %>').replaceWith('<%= j render @votable %>');
