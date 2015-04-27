@@ -1,1 +1,1 @@
-$('.alert').append('<%= 'test line' %>')
+$("#rating_<%= model_id @votable %>").replaceWith('<%= "Rating is: #{@votable.rating}" %>');
