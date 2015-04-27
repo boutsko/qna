@@ -10,16 +10,16 @@ module VotableController
 
   def like
     @votable.liked_by current_user
-    render 'layouts/votable/update'
-#    update_votes
+    # render 'layouts/votable/update'
+    update_votes
   end
 
-  def downvote
+  def dislike
     @votable.disliked_by current_user
     update_votes
   end
 
-  def unvote
+  def withdraw_vote
     @votable.withdraw_vote_by current_user
     update_votes
   end
@@ -43,7 +43,8 @@ module VotableController
   end
 
   def update_votes
-    render 'layouts/votes/update'
+    render 'layouts/votable/update'
+    # render 'layouts/votes/update'
   end
 end
   

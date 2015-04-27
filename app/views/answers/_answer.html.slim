@@ -4,7 +4,17 @@
     span =>
     = link_to "Vote Up", polymorphic_path([:like, answer.question, answer]), class: 'vote-answer-up-link', data: { answer_id: answer.id }, remote: true, method: :patch
     span =>
-    = link_to "Vote Down", '', class: 'vote-answer-down-link', data: { answer_id: answer.id }
+    = link_to "Vote Down", polymorphic_path([:dislike, answer.question, answer]), class: 'vote-answer-down-link', data: { answer_id: answer.id }, remote: true, method: :patch
+
+  td.answer_votes
+    = render 'layouts/votes/show', votable: answer
+
+    div id="vote_#{ model_id answer }"
+      div id="rating_#{ model_id answer }"
+
+        - if answer.rating
+          p= "Rating is: #{ answer.rating }"
+
 
     p = answer.body 
     ul
