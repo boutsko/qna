@@ -51,8 +51,6 @@ end
 gem 'slim-rails'
 #gem 'jquery-turbolinks'
 
-gem 'jbuilder', '~> 2.0'
-
 group :test, :development do
   gem 'rspec-rails'
   gem 'factory_girl_rails'
