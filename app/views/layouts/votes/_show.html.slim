@@ -11,14 +11,14 @@ div id="vote_#{ model_id votable }"
       /   | Your vote: #{ votable.vote_by current_user }
       p id="withdraw_#{ model_id votable }"
         / = link_to "Withdraw", polymorphic_path([:withdraw_vote, votable]), remote: true, method: :patch
-        = link_to "Withdraw", polymorphic_path([:withdraw_vote, votable.question, votable]), remote: true, method: :patch
+        = link_to "Withdraw", polymorphic_path([:withdraw_vote, votable]), remote: true, method: :patch
 
     - else
       - if user_can_vote_for votable
 
         p id="like_#{ model_id votable }"
-          = link_to "Like", polymorphic_path([:like, votable.question, votable]), remote: true, method: :patch
+          = link_to "Like", polymorphic_path([:like, votable]), remote: true, method: :patch
 
         p id="dislike_#{ model_id votable }"
-          = link_to "Dislike", polymorphic_path([:dislike, votable.question, votable]), remote: true, method: :patch
+          = link_to "Dislike", polymorphic_path([:dislike, votable]), remote: true, method: :patch
 

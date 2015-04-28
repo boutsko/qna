@@ -1,7 +1,7 @@
 class AnswersController < ApplicationController
   before_action :authenticate_user!, except: [ :index, :show ]
-  before_action :load_question
   before_action :load_answer, only: [ :show, :edit, :update, :destroy, :best ]
+#  before_action :load_question 
   before_action :user_created_answer?, only: [ :update, :destroy ]
   before_action :user_created_question?, only: [:best]
 
@@ -22,6 +22,9 @@ class AnswersController < ApplicationController
   end
 
   def create
+    @question = if params.has_key?(:question_id)
+                  Question.find(params[:question_id])
+                end
     @answer = @question.answers.build(answer_params)
     @answer.user = current_user
 
@@ -44,14 +47,27 @@ class AnswersController < ApplicationController
   end
 
   private
-  
+
+
   def load_question
-    @question = Question.find(params[:question_id])
+    # @question = if params.has_key?(:question_id)
+      # Question.find(params[:question_id])
+    # else
+      @answer.question
+    # end
   end
 
   def load_answer
-    @answer = @question.answers.find(params[:id])
+    @answer = Answer.find(params[:id])
   end
+  
+  # def load_question
+  #   @question = Question.find(params[:question_id])
+  # end
+
+  # def load_answer
+  #   @answer = @question.answers.find(params[:id])
+  # end
 
   def user_created_answer?
     if @answer.user_id != current_user.id

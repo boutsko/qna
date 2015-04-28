@@ -5,7 +5,7 @@ class Answer < ActiveRecord::Base
   belongs_to :user
 
   has_many :attachments, as: :attachable
-  has_many :votes, as: :votable
+#  has_many :votes, as: :votable
   
   validates :body, presence: true
 
