@@ -34,6 +34,9 @@ class AnswersController < ApplicationController
   end
 
   def update
+    @question = if params.has_key?(:question_id)
+                  Question.find(params[:question_id])
+                end
     @answer.update(answer_params)
   end
 

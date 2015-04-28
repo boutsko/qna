@@ -18,7 +18,7 @@
     - if answer.best?
       p = 'The best answer!'
     - else
-      - if current_user == @question.user
+      - if current_user == answer.question.user
         = link_to "Best", best_answer_path(answer), method: :patch, remote: true
         span =>
     - if user_signed_in? && current_user.id == answer.user_id
