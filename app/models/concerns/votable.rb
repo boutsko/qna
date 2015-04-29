@@ -20,7 +20,7 @@ module Votable
     votes.where(user: user).delete_all
   end
 
-  def has_vote_by(user)
+  def has_vote_by?(user)
     votes.where(user: user).any?
   end
 

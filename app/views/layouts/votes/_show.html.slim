@@ -5,7 +5,7 @@ div id="vote_#{ model_id votable }"
       p= "Rating is: #{ votable.rating }"
 
   - if user_signed_in?
-    - if votable.has_vote_by current_user
+    - if votable.has_vote_by? current_user
 
       / p id="my_vote_#{ model_id votable }"
       /   | Your vote: #{ votable.vote_by current_user }
