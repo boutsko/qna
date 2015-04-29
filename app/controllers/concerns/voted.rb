@@ -5,7 +5,7 @@ module Voted
     before_action :load_votable_resource, only: [:like, :dislike, :withdraw_vote]
     # after_action :update_votes, only: [:like, :dislike, :withdraw_vote]
     helper_method :user_can_vote_for
-    end
+  end
 
   def like
     @votable.liked_by(current_user)
@@ -23,9 +23,7 @@ module Voted
   end
 
   def user_can_vote_for(votable)
-    if user_signed_in?
-      votable.user_id != current_user.id
-    end
+    user_signed_in? && votable.user_id != current_user.id
   end
 
   private
@@ -44,4 +42,4 @@ module Voted
     render 'layouts/votable/update'
   end
 end
-  
+
