@@ -1,11 +1,11 @@
 module Voted
   extend ActiveSupport::Concern
-
+  
   included do
     before_action :load_votable_resource, only: [:like, :dislike, :withdraw_vote]
-
+    # after_action :update_votes, only: [:like, :dislike, :withdraw_vote]
     helper_method :user_can_vote_for
-  end
+    end
 
   def like
     @votable.liked_by(current_user)
