@@ -5,7 +5,7 @@ class AnswersController < ApplicationController
   before_action :user_created_answer?, only: [ :update, :destroy ]
   before_action :user_created_question?, only: [:best]
 
-  include VotableController
+  include Voted
   
   def index
     @answers = @question.answers

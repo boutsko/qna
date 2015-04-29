@@ -1,4 +1,4 @@
-module VotableController
+module Voted
   extend ActiveSupport::Concern
 
   included do

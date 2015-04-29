@@ -3,7 +3,7 @@ class QuestionsController < ApplicationController
   before_action :load_question, only: [:show, :edit, :update, :destroy]
   before_action :user_created_question?, only: [:update, :destroy]
 
-  include VotableController
+  include Voted
   
   def index
     @questions = Question.all
