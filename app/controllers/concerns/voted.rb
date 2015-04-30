@@ -22,10 +22,6 @@ module Voted
     update_votes
   end
 
-  def user_can_vote_for?(votable)
-    user_signed_in? && votable.user_id != current_user.id
-  end
-
   private
 
   def load_votable_resource

@@ -11,4 +11,9 @@ class User < ActiveRecord::Base
   def author_of?(obj)
     obj.user_id = self.id
   end
+
+  def can_vote_for?(votable)
+    votable.user_id != self.id
+  end
+
 end

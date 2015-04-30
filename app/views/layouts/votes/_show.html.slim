@@ -11,7 +11,7 @@ div id="vote_#{ model_id votable }"
         = link_to "Withdraw", polymorphic_path([:withdraw_vote, votable]), remote: true, method: :patch
 
     - else
-      - if user_can_vote_for?(votable)
+      - if current_user.can_vote_for?(votable)
 
         p id="like_#{ model_id votable }"
           = link_to "Like", polymorphic_path([:like, votable]), remote: true, method: :patch
