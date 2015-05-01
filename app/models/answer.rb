@@ -1,8 +1,11 @@
 class Answer < ActiveRecord::Base
+  include Votable
+  
   belongs_to :question
   belongs_to :user
 
   has_many :attachments, as: :attachable
+#  has_many :votes, as: :votable
   
   validates :body, presence: true
 
