@@ -17,5 +17,4 @@ h3 Answers:
       p = f.link_to_add 'Add more files', :attachments
       = f.submit 'Create Answer'
 
-
-
+= subscribe_to "/questions/#{@question.id}/answers"
