@@ -24,9 +24,17 @@ class AnswersController < ApplicationController
   def create
     @answer = @question.answers.build(answer_params)
     @answer.user = current_user
-
-    unless @answer.save
-      render status: :unprocessable_entity
+    
+    respond_to do |format|
+      if @answer.save
+        format.js
+      else
+        format.js
+      end
+      
+      # unless @answer.save
+      #   render status: :unprocessable_entity
+      # end
     end
   end
 
@@ -48,10 +56,10 @@ class AnswersController < ApplicationController
 
   def load_question
     @question = if params.has_key?(:question_id)
-      Question.find(params[:question_id])
-    else
-      @answer.question
-    end
+                  Question.find(params[:question_id])
+                else
+                  @answer.question
+                end
   end
 
   def load_answer
