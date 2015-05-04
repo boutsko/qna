@@ -1,7 +1,5 @@
 - if answer.persisted?
-  - id = answer.id
-
-  div id="answer_#{answer.id}"
+  = div_for answer
 
     td.answer_votes
       = render 'layouts/votes/show', votable: answer
@@ -23,7 +21,8 @@
         = link_to "Best", best_answer_path(answer), method: :patch, remote: true
         span =>
     - if user_signed_in? && current_user.id == answer.user_id
-      = link_to "Delete", answer, method: :delete, remote: true
+      =< render 'shared/link_delete', item: answer
+      / = link_to "Delete", answer, method: :delete, remote: true
       span =>
       = link_to "Edit", '', class: 'edit-answer-link', data: { answer_id: answer.id }
 
