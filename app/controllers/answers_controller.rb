@@ -55,16 +55,21 @@ class AnswersController < ApplicationController
 
 
   def load_question
-    @question = if params.has_key?(:question_id)
-                  Question.find(params[:question_id])
-                else
-                  @answer.question
-                end
+    @question =
+      if params.has_key?(:question_id)
+        Question.find(params[:question_id])
+      else
+        @answer.question
+      end
   end
 
   def load_answer
-    @answer = Answer.find(params[:id])
+    @answer = Answer.includes(answer_includes).find(params[:id])
   end
+  
+  # def load_answer
+  #   @answer = Answer.find(params[:id])
+  # end
 
   def user_created_answer?
     if @answer.user_id != current_user.id
@@ -80,5 +85,9 @@ class AnswersController < ApplicationController
   
   def answer_params
     params.require(:answer).permit(:body, attachments_attributes: [:id, :file, :_destroy])
+  end
+
+  def answer_includes
+    [:attachments, :votes, :comments]
   end
 end
