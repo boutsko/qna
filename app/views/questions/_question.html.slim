@@ -19,23 +19,21 @@ div id="question_#{question.id}"
     p= link_to "Delete Question", question, method: :delete
 
 
-  .comments_new
+  - if user_signed_in?
+    .comments_new
+      span =< link_to "Create question comment", '', id: "link_new_comment_for_#{ dom_id question }", class: "link_new_comment", data: { question: dom_id(question) }
 
-    span =< link_to "Create question comment", '', id: "link_new_comment_for_#{ dom_id question }", class: "link_new_comment", data: { question: dom_id(question) }
+      = form_for [question, question.comments.new], remote: true, html: { id: "form_new_comment_for_#{ dom_id question}", style: "display: true" } do |f|
+        p
+          = f.label :body, t("comment.label.body")
+          br
+          = f.text_area :body
+          = hidden_field_tag(:commentable_class, "Question")
+          = hidden_field_tag(:commentable_id, question.id)
 
-    = form_for [question, question.comments.new], remote: true, html: { id: "form_new_comment_for_#{ dom_id question}", style: "display: true" } do |f|
-      p
-        = f.label :body, t("comment.label.body")
-        br
-        = f.text_area :body
-        = hidden_field_tag(:commentable_class, "Question")
-        = hidden_field_tag(:commentable_id, question.id)
-
-      p = f.submit "Submit"
+        p = f.submit "Submit"
 
   = div_for question, :comments, class: :comments
     = render question.comments
 
-  - if user_signed_in?
-    / = render 'comments/new', question: question
 
