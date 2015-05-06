@@ -4,7 +4,8 @@ class CommentsController < ApplicationController
   before_action :load_comment, only: :destroy
 
   def create
-    @comment = @commentable.comments.create comment_params
+    # @comment = @commentable.comments.create comment_params
+    @comment = Question.find(1).comments.create comment_params
   end
 
   def destroy
@@ -15,8 +16,11 @@ class CommentsController < ApplicationController
 
   def load_commentable
     # @commentable = commentable_klass.find params[commentable_id]
+    @commentable = commentable_klass.find(params[:commentable_id])
     # @commentable = Answer.find(6)
-    @commentable = Question.find(1) 
+    # @commentable = Question.find(1)
+    # @commentable = controller_name.classify.constantize.find(params[:passing])
+    # @commentable = params[:commentable]
   end
 
   def load_comment
@@ -37,6 +41,7 @@ class CommentsController < ApplicationController
   end
 
   def commentable_klass
-    commentable_name.classify.constantize
+    # commentable_name.classify.constantize
+    params[:commentable_class].classify.constantize
   end
 end

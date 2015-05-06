@@ -23,11 +23,13 @@ div id="question_#{question.id}"
 
     span =< link_to "Create question comment", '', id: "link_new_comment_for_#{ dom_id question }", class: "link_new_comment", data: { question: dom_id(question) }
 
-    = form_for [question, question.comments.new], remote: true, html: { id: "form_new_comment_for_#{ dom_id question}", style: "display: true" }, commentable: question do |f|
+    = form_for [question, question.comments.new], remote: true, html: { id: "form_new_comment_for_#{ dom_id question}", style: "display: true" } do |f|
       p
         = f.label :body, t("comment.label.body")
         br
         = f.text_area :body
+        = hidden_field_tag(:commentable_class, "Question")
+        = hidden_field_tag(:commentable_id, question.id)
 
       p = f.submit "Submit"
 
