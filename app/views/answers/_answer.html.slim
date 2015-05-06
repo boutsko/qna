@@ -43,7 +43,7 @@
 
       p = f.submit "Submit"
 
-  = div_for answer, :comments, class: :comments
+  / = div_for answer, :comments, class: :comments
     = render answer.comments
 
   - if user_signed_in?

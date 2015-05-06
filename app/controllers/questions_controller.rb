@@ -49,8 +49,12 @@ class QuestionsController < ApplicationController
   private
   
   def load_question
-    @question = Question.find(params[:id])
+    @question = Question.includes(question_includes).find(params[:id])
   end
+
+  # def load_question
+  #   @question = Question.find(params[:id])
+  # end
 
   def user_created_question?
     if @question.user_id != current_user.id
@@ -60,5 +64,9 @@ class QuestionsController < ApplicationController
   
   def question_params
     params.require(:question).permit(:title, :body, attachments_attributes: [:id, :file, :_destroy])
+  end
+
+    def question_includes
+    [:attachments, :votes, :comments]
   end
 end
