@@ -31,7 +31,6 @@
           = f.submit 'Saves'
 
     = div_for answer, :comments, class: :comments
-      | here should be comments !!!!!
       = render answer.comments
 
     - if user_signed_in?

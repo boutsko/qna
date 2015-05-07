@@ -6,7 +6,6 @@ class CommentsController < ApplicationController
 
   def create
     @comment = @commentable.comments.create(comment_params)
-    # @comment.save
   end
 
   def destroy
@@ -16,8 +15,6 @@ class CommentsController < ApplicationController
   private
 
   def load_commentable
-    # klass = [Question, Answer].detect{|c| params["#{c.name.underscore}_id"]}
-    # @commentable= klass.find(params["#{klass.name.underscore}_id"])
     @commentable = commentable_klass.find(params[commentable_id_s])
 
   end
@@ -43,8 +40,5 @@ class CommentsController < ApplicationController
     params[:commentable].classify.constantize
   end
 
-  
 end
 
-
-#Parameters: {"utf8"=>"✓", "comment"=>{"body"=>"aaa"}, "commit"=>"Submit", "commentable"=>"answer", "answer_id"=>"1"}

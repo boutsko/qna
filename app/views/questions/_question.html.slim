@@ -28,8 +28,6 @@ div id="question_#{question.id}"
           = f.label :body, t("comment.label.body")
           br
           = f.text_area :body
-          = hidden_field_tag(:commentable_class, "Question")
-          = hidden_field_tag(:commentable_id, question.id)
 
         p = f.submit "Submit"
 
