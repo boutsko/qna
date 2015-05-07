@@ -14,8 +14,11 @@ class CommentsController < ApplicationController
   private
 
   def load_commentable
-    @commentable = commentable_klass.find(params[:commentable_id])
+    # @commentable = commentable_klass.find(params[:commentable_id])
     # @commentable = controller_name.classify.constantize.find(params[:passing])
+    klass = [Question, Answer].detect{|c| params["#{c.name.underscore}_id"]}
+    @commentable= klass.find(params["#{klass.name.underscore}_id"])
+
   end
 
   def load_comment
@@ -36,7 +39,7 @@ class CommentsController < ApplicationController
   end
 
   def commentable_klass
-    # commentable_name.classify.constantize
-    params[:commentable_class].classify.constantize
+    commentable_name.classify.constantize
+    # params[:commentable_class].classify.constantize
   end
 end

@@ -43,8 +43,8 @@
             = f.label :body, t("comment.label.body")
             br
             = f.text_area :body
-            = hidden_field_tag(:commentable_class, "Answer")
-            = hidden_field_tag(:commentable_id, answer.id)
+            / = hidden_field_tag(:commentable_class, "Answer")
+            / = hidden_field_tag(:commentable_id, answer.id)
 
           p = f.submit "Submit"
 

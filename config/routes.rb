@@ -17,11 +17,11 @@ Rails.application.routes.draw do
 
 
   resources :questions do
-    resources :comments
+    resources :comments, defaults: { commentable: 'question' }
   end
 
   resources :answers do
-    resources :comments
+    resources :comments, defaults: { commentable: 'answer' }
   end
 
   resources :attachments, only: [:destroy]
