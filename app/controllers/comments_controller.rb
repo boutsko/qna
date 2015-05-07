@@ -14,8 +14,6 @@ class CommentsController < ApplicationController
   private
 
   def load_commentable
-    # @commentable = commentable_klass.find(params[:commentable_id])
-    # @commentable = controller_name.classify.constantize.find(params[:passing])
     klass = [Question, Answer].detect{|c| params["#{c.name.underscore}_id"]}
     @commentable= klass.find(params["#{klass.name.underscore}_id"])
 
@@ -27,19 +25,6 @@ class CommentsController < ApplicationController
 
   def comment_params
     strong_params = params.require(:comment).permit(:body, :commentable)
-    # strong_params.merge(user_id: current_user.id) if user_signed_in?
   end
 
-  def commentable_name
-    params[:commentable]
-  end
-
-  def commentable_id
-    "#{commentable_name}_id"
-  end
-
-  def commentable_klass
-    commentable_name.classify.constantize
-    # params[:commentable_class].classify.constantize
-  end
 end
