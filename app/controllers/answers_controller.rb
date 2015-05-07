@@ -45,7 +45,6 @@ class AnswersController < ApplicationController
 
   private
 
-
   def load_question
     @question =
       if params.has_key?(:question_id)
@@ -54,14 +53,10 @@ class AnswersController < ApplicationController
         @answer.question
       end
   end
-
-  def load_answer
-    @answer = Answer.includes(:attachments, :votes, :comments).find(params[:id])
-  end
   
-  # def load_answer
-  #   @answer = Answer.find(params[:id])
-  # end
+  def load_answer
+    @answer = Answer.find(params[:id])
+  end
 
   def user_created_answer?
     if @answer.user_id != current_user.id
