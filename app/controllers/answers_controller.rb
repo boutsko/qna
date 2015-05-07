@@ -24,17 +24,9 @@ class AnswersController < ApplicationController
   def create
     @answer = @question.answers.build(answer_params)
     @answer.user = current_user
-    
+    @answer.save    
     respond_to do |format|
-      if @answer.save
-        format.js
-      else
-        format.js
-      end
-      
-      # unless @answer.save
-      #   render status: :unprocessable_entity
-      # end
+      format.js
     end
   end
 
@@ -64,7 +56,7 @@ class AnswersController < ApplicationController
   end
 
   def load_answer
-    @answer = Answer.includes(answer_includes).find(params[:id])
+    @answer = Answer.includes(:attachments, :votes, :comments).find(params[:id])
   end
   
   # def load_answer
@@ -87,7 +79,4 @@ class AnswersController < ApplicationController
     params.require(:answer).permit(:body, attachments_attributes: [:id, :file, :_destroy])
   end
 
-  def answer_includes
-    [:attachments, :votes, :comments]
-  end
 end
