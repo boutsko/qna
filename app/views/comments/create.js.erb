@@ -4,7 +4,13 @@
 } do %>
   $("#form_new_comment_for_<%= dom_id @commentable %>").hide()
   $("#link_new_comment_for_<%= dom_id @commentable %>").show()
-  <% publish_to "/comments" do %>
-    $("#comments_<%= dom_id @commentable %>").append('<%= j render @comment %>');
+  <% if @commentable.class.name == 'Question' %>
+    <% publish_to "/questions/#{ @commentable.id }" do %>
+      $("#comments_<%= dom_id @commentable %>").append('<%= j render @comment %>');
+	<% end %>
+  <% elsif @commentable.class.name == 'Answer' %>
+    <% publish_to "/questions/#{ @commentable.question.id }" do %>
+      $("#comments_<%= dom_id @commentable %>").append('<%= j render @comment %>');
+    <% end %>
   <% end %>
 <% end %>
