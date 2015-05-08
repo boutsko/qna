@@ -16,7 +16,6 @@ class CommentsController < ApplicationController
 
   def load_commentable
     @commentable = commentable_klass.find(params[commentable_id_s])
-
   end
 
   def load_comment

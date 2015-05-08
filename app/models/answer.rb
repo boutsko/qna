@@ -15,10 +15,6 @@ class Answer < ActiveRecord::Base
   
   default_scope { order(best: :desc, created_at: :asc) }
 
-  def with_associations
-    self.includes(:attachments, :votes, :comments)
-  end
-  
   def make_best
     self.question.answers.update_all(best: false)
     self.update(best: true)
