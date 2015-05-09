@@ -3,20 +3,24 @@ class QuestionsController < ApplicationController
   before_action :load_question, only: [:show, :edit, :update, :destroy]
   before_action :user_created_question?, only: [:update, :destroy]
 
+  respond_to :html
+  
   include Voted
   
   def index
-    @questions = Question.all
+    respond_with(@questions = Question.all)
   end
 
   def show
     @answer = @question.answers.build
     @answer.attachments.build
+    respond_with @question
   end
 
   def new
     @question = Question.new
     @question.attachments.build
+    respond_with @question
   end
 
   def edit
@@ -25,36 +29,24 @@ class QuestionsController < ApplicationController
   def create
     @question = Question.new(question_params)
     @question.user = current_user
-    if @question.save
-      redirect_to @question, notice: 'Question created'
-    else
-      flash[:alert] = 'ERROR: Question not created'
-      render :new
-    end
+    flash[:notice] = 'Your question was successfully created.' if @question.save
+    respond_with @question
   end
 
   def update
-    if @question.update(question_params) 
-      redirect_to :question
-    else
-      render :edit
-    end 
+    @question.update(question_params)
+    respond_with @question
   end
 
   def destroy
-    @question.destroy! 
-    redirect_to questions_path, notice: 'Question destroyed'
+   respond_with(@question.destroy!)
   end
 
   private
   
   def load_question
-    @question = Question.includes(question_includes).find(params[:id])
+    @question = Question.find(params[:id])
   end
-
-  # def load_question
-  #   @question = Question.find(params[:id])
-  # end
 
   def user_created_question?
     if @question.user_id != current_user.id
@@ -66,7 +58,4 @@ class QuestionsController < ApplicationController
     params.require(:question).permit(:title, :body, attachments_attributes: [:id, :file, :_destroy])
   end
 
-    def question_includes
-    [:attachments, :votes, :comments]
-  end
 end
