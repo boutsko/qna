@@ -1,3 +1,1 @@
-$('#answer_<%= @answer.id %>').remove();
-
-
+<%= render 'shared/remove_item_after_destroy', item: @answer, channel: "/questions/#{ @answer.question.id }" %>

@@ -40,6 +40,6 @@ $ ->
     $.each errors, (index, value) ->
       $('.answer-errors').append(value)
 
-  $(document).on 'ajax:success', 'form#new_answer', answer_create
-  $(document).on 'ajax:error', 'form#new_answer', answer_create_error
+  # $(document).on 'ajax:success', 'form#new_answer', answer_create
+  # $(document).on 'ajax:error', 'form#new_answer', answer_create_error
 

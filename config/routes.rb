@@ -16,6 +16,14 @@ Rails.application.routes.draw do
   end
 
 
+  resources :questions do
+    resources :comments, defaults: { commentable: 'question' }
+  end
+
+  resources :answers do
+    resources :comments, defaults: { commentable: 'answer' }
+  end
+
   resources :attachments, only: [:destroy]
 
   
