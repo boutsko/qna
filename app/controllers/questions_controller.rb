@@ -2,6 +2,7 @@ class QuestionsController < ApplicationController
   before_action :authenticate_user!, except: [ :index, :show ]
   before_action :load_question, only: [:show, :edit, :update, :destroy]
   before_action :user_created_question?, only: [:update, :destroy]
+  before_action :build_answer, only: [:show]
 
   respond_to :html
   
@@ -12,15 +13,11 @@ class QuestionsController < ApplicationController
   end
 
   def show
-    @answer = @question.answers.build
-    @answer.attachments.build
     respond_with @question
   end
 
   def new
-    @question = Question.new
-    @question.attachments.build
-    respond_with @question
+    respond_with(@question = Question.new)
   end
 
   def edit
@@ -39,10 +36,14 @@ class QuestionsController < ApplicationController
   end
 
   def destroy
-   respond_with(@question.destroy!)
+    respond_with(@question.destroy!)
   end
 
   private
+
+  def build_answer
+    @answer = @question.answers.build
+  end
   
   def load_question
     @question = Question.find(params[:id])
