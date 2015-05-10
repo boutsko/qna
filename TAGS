@@ -52,12 +52,12 @@ class QuestionsController < ApplicationControllerQuestionsController1,0
   def newnew19,0
   def editedit23,0
   def createcreate26,0
-  def updateupdate33,0
-  def destroydestroy38,0
-  def build_answerbuild_answer44,0
-  def load_questionload_question48,0
-  def user_created_question?user_created_question?52,0
-  def question_paramsquestion_params58,0
+  def updateupdate31,0
+  def destroydestroy36,0
+  def build_answerbuild_answer42,0
+  def load_questionload_question46,0
+  def user_created_question?user_created_question?50,0
+  def question_paramsquestion_params56,0
 
 app/helpers/answers_helper.rb,39
 module AnswersHelperAnswersHelper1,0

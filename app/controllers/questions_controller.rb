@@ -13,7 +13,7 @@ class QuestionsController < ApplicationController
   end
 
   def show
-    respond_with @question
+    respond_with(@question)
   end
 
   def new
@@ -24,15 +24,12 @@ class QuestionsController < ApplicationController
   end
   
   def create
-    @question = Question.new(question_params)
-    @question.user = current_user
-    flash[:notice] = 'Your question was successfully created.' if @question.save
-    respond_with @question
+    respond_with(@question = Question.create(question_params))
   end
 
   def update
     @question.update(question_params)
-    respond_with @question
+    respond_with(@question)
   end
 
   def destroy
@@ -56,7 +53,8 @@ class QuestionsController < ApplicationController
   end
   
   def question_params
-    params.require(:question).permit(:title, :body, attachments_attributes: [:id, :file, :_destroy])
+    strong_params = params.require(:question).permit(:title, :body, attachments_attributes: [:id, :file, :_destroy])
+    strong_params.merge(user_id: current_user.id) if user_signed_in?
   end
 
 end
