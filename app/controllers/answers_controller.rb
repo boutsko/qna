@@ -5,30 +5,32 @@ class AnswersController < ApplicationController
   before_action :user_created_answer?, only: [ :update, :destroy ]
   before_action :user_created_question?, only: [:best]
 
+  respond_to :html
+  respond_to :js
+
   include Voted
   
   def index
-    @answers = @question.answers
+    respond_with(@answers = @question.answers)
   end
 
   def show
   end
 
   def new
-    @answer = @question.answers.new
+    respond_with(@answer = @question.answers.new)
   end
 
   def edit
   end
 
   def create
-    @answer = @question.answers.build(answer_params)
-    @answer.user = current_user
-    @answer.save    
+    respond_with(@answer = @question.answers.create(answer_params))
   end
 
   def update
-    @answer.update(answer_params)
+    # @answer.update(answer_params)
+    respond_with @answer
   end
 
   def best
@@ -37,18 +39,13 @@ class AnswersController < ApplicationController
   end
   
   def destroy
-    @answer.destroy
+    respond_with(@answer.destroy)
   end
 
   private
 
   def load_question
-    @question =
-      if params.has_key?(:question_id)
-        Question.find(params[:question_id])
-      else
-        @answer.question
-      end
+    @question = params.has_key?(:question_id) ? Question.find(params[:question_id]) : @answer.question
   end
   
   def load_answer
@@ -68,7 +65,8 @@ class AnswersController < ApplicationController
   end
   
   def answer_params
-    params.require(:answer).permit(:body, attachments_attributes: [:id, :file, :_destroy])
+    strong_params = params.require(:answer).permit(:body, attachments_attributes: [:id, :file, :_destroy])
+    strong_params.merge(user_id: current_user.id) if user_signed_in?
   end
 
 end
