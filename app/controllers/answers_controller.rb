@@ -18,7 +18,9 @@ class AnswersController < ApplicationController
   end
 
   def create
-    respond_with(@answer = @question.answers.create(answer_params))
+    @answer = @question.answers.create(answer_params)
+    @answer.user = current_user
+    respond_with(@answer)
   end
 
   def update
@@ -58,7 +60,6 @@ class AnswersController < ApplicationController
   
   def answer_params
     strong_params = params.require(:answer).permit(:body, attachments_attributes: [:id, :file, :_destroy])
-    strong_params.merge(user_id: current_user.id) if user_signed_in?
   end
 
 end
