@@ -1,6 +1,6 @@
 class AnswersController < ApplicationController
-  before_action :authenticate_user!, except: [ :index, :show ]
-  before_action :load_answer, only: [ :show, :edit, :update, :destroy, :best ]
+  before_action :authenticate_user!
+  before_action :load_answer, only: [ :edit, :update, :destroy, :best ]
   before_action :load_question, only: [ :create, :update ]
   before_action :user_created_answer?, only: [ :update, :destroy ]
   before_action :user_created_question?, only: [:best]
@@ -10,13 +10,6 @@ class AnswersController < ApplicationController
 
   include Voted
   
-  def index
-    respond_with(@answers = @question.answers)
-  end
-
-  def show
-  end
-
   def new
     respond_with(@answer = @question.answers.new)
   end
