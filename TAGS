@@ -1,0 +1,260 @@
+
+app/controllers/answers_controller.rb,475
+class AnswersController < ApplicationControllerAnswersController1,0
+  def indexindex10,0
+  def showshow14,0
+  def newnew17,0
+  def editedit21,0
+  def createcreate24,0
+  def updateupdate30,0
+  def bestbest34,0
+  def destroydestroy39,0
+  def load_questionload_question45,0
+  def load_answerload_answer54,0
+  def user_created_answer?user_created_answer?58,0
+  def user_created_question?user_created_question?64,0
+  def answer_paramsanswer_params70,0
+
+app/controllers/application_controller.rb,79
+class ApplicationController < ActionController::BaseApplicationController3,0
+
+app/controllers/attachments_controller.rb,209
+class AttachmentsController < ApplicationControllerAttachmentsController1,0
+  def destroydestroy4,0
+  def load_attachmentload_attachment11,0
+  def find_parentfind_parent15,0
+  def author?author?19,0
+
+app/controllers/comments_controller.rb,383
+class CommentsController < ApplicationControllerCommentsController2,0
+  def createcreate7,0
+  def destroydestroy11,0
+  def load_commentableload_commentable17,0
+  def load_commentload_comment21,0
+  def comment_paramscomment_params25,0
+  def commentable_namecommentable_name29,0
+  def commentable_id_scommentable_id_s33,0
+  def commentable_klasscommentable_klass38,0
+
+app/controllers/concerns/voted.rb,253
+module VotedVoted1,0
+  def likelike10,0
+  def dislikedislike15,0
+  def withdraw_votewithdraw_vote20,0
+  def load_votable_resourceload_votable_resource27,0
+  def check_user_can_votecheck_user_can_vote31,0
+  def update_votesupdate_votes37,0
+
+app/controllers/questions_controller.rb,411
+class QuestionsController < ApplicationControllerQuestionsController1,0
+  def indexindex11,0
+  def showshow15,0
+  def newnew19,0
+  def editedit23,0
+  def createcreate26,0
+  def updateupdate31,0
+  def destroydestroy36,0
+  def build_answerbuild_answer42,0
+  def load_questionload_question46,0
+  def user_created_question?user_created_question?50,0
+  def question_paramsquestion_params56,0
+
+app/helpers/answers_helper.rb,39
+module AnswersHelperAnswersHelper1,0
+
+app/helpers/application_helper.rb,82
+module ApplicationHelperApplicationHelper1,0
+  def model_id recordmodel_id2,0
+
+app/helpers/attachments_helper.rb,47
+module AttachmentsHelperAttachmentsHelper1,0
+
+app/helpers/questions_helper.rb,43
+module QuestionsHelperQuestionsHelper1,0
+
+app/models/answer.rb,676
+class Answer < ActiveRecord::BaseAnswer1,0
+  belongs_to :questionquestion5,0
+  belongs_to :questionquestion=5,0
+  belongs_to :questionbuild_question5,0
+  belongs_to :questioncreate_question5,0
+  belongs_to :questioncreate_question!5,0
+  belongs_to :useruser6,0
+  belongs_to :useruser=6,0
+  belongs_to :userbuild_user6,0
+  belongs_to :usercreate_user6,0
+  belongs_to :usercreate_user!6,0
+  has_many :attachments, as: :attachableattachments8,0
+  has_many :attachments, as: :attachableattachments=8,0
+  has_many :attachments, as: :attachableattachment_ids8,0
+  has_many :attachments, as: :attachableattachment_ids=8,0
+  def make_bestmake_best18,0
+
+app/models/attachment.rb,370
+class Attachment < ActiveRecord::BaseAttachment1,0
+  belongs_to :attachable, polymorphic: trueattachable2,0
+  belongs_to :attachable, polymorphic: trueattachable=2,0
+  belongs_to :attachable, polymorphic: truebuild_attachable2,0
+  belongs_to :attachable, polymorphic: truecreate_attachable2,0
+  belongs_to :attachable, polymorphic: truecreate_attachable!2,0
+
+app/models/comment.rb,374
+class Comment < ActiveRecord::BaseComment1,0
+  belongs_to :commentable, polymorphic: truecommentable2,0
+  belongs_to :commentable, polymorphic: truecommentable=2,0
+  belongs_to :commentable, polymorphic: truebuild_commentable2,0
+  belongs_to :commentable, polymorphic: truecreate_commentable2,0
+  belongs_to :commentable, polymorphic: truecreate_commentable!2,0
+
+app/models/concerns/commentable.rb,35
+module CommentableCommentable1,0
+
+app/models/concerns/votable.rb,356
+module VotableVotable1,0
+  LIKE = 1LIKE8,0
+  DISLIKE = -1DISLIKE9,0
+  def liked_by(user)liked_by11,0
+  def disliked_by(user)disliked_by15,0
+  def withdraw_vote_by(user)withdraw_vote_by19,0
+  def has_vote_by?(user)has_vote_by?23,0
+  def vote_by(user)vote_by27,0
+  def ratingrating31,0
+  def new_vote_by(user, like = LIKE)new_vote_by37,0
+
+app/models/question.rb,843
+class Question < ActiveRecord::BaseQuestion1,0
+  belongs_to :useruser5,0
+  belongs_to :useruser=5,0
+  belongs_to :userbuild_user5,0
+  belongs_to :usercreate_user5,0
+  belongs_to :usercreate_user!5,0
+  has_many :answers, dependent: :destroyanswers7,0
+  has_many :answers, dependent: :destroyanswers=7,0
+  has_many :answers, dependent: :destroyanswer_ids7,0
+  has_many :answers, dependent: :destroyanswer_ids=7,0
+  has_many :attachments, as: :attachableattachments8,0
+  has_many :attachments, as: :attachableattachments=8,0
+  has_many :attachments, as: :attachableattachment_ids8,0
+  has_many :attachments, as: :attachableattachment_ids=8,0
+  has_many :votes, as: :votablevotes9,0
+  has_many :votes, as: :votablevotes=9,0
+  has_many :votes, as: :votablevote_ids9,0
+  has_many :votes, as: :votablevote_ids=9,0
+
+app/models/user.rb,535
+class User < ActiveRecord::BaseUser1,0
+  has_many :questionsquestions7,0
+  has_many :questionsquestions=7,0
+  has_many :questionsquestion_ids7,0
+  has_many :questionsquestion_ids=7,0
+  has_many :answersanswers8,0
+  has_many :answersanswers=8,0
+  has_many :answersanswer_ids8,0
+  has_many :answersanswer_ids=8,0
+  has_many :votesvotes9,0
+  has_many :votesvotes=9,0
+  has_many :votesvote_ids9,0
+  has_many :votesvote_ids=9,0
+  def author_of?(obj)author_of?11,0
+  def can_vote_for?(votable)can_vote_for?15,0
+
+app/models/vote.rb,490
+class Vote < ActiveRecord::BaseVote1,0
+  belongs_to :useruser2,0
+  belongs_to :useruser=2,0
+  belongs_to :userbuild_user2,0
+  belongs_to :usercreate_user2,0
+  belongs_to :usercreate_user!2,0
+  belongs_to :votable, polymorphic: truevotable3,0
+  belongs_to :votable, polymorphic: truevotable=3,0
+  belongs_to :votable, polymorphic: truebuild_votable3,0
+  belongs_to :votable, polymorphic: truecreate_votable3,0
+  belongs_to :votable, polymorphic: truecreate_votable!3,0
+
+app/uploaders/file_uploader.rb,96
+class FileUploader < CarrierWave::Uploader::BaseFileUploader3,0
+  def store_dirstore_dir8,0
+
+config/application.rb,77
+module QnaQna9,0
+  class Application < Rails::ApplicationApplication10,0
+
+db/migrate/20150310215121_create_questions.rb,92
+class CreateQuestions < ActiveRecord::MigrationCreateQuestions1,0
+  def changechange2,0
+
+db/migrate/20150310221305_create_answers.rb,88
+class CreateAnswers < ActiveRecord::MigrationCreateAnswers1,0
+  def changechange2,0
+
+db/migrate/20150317122509_create_users.rb,84
+class CreateUsers < ActiveRecord::MigrationCreateUsers1,0
+  def changechange2,0
+
+db/migrate/20150317125233_add_devise_to_users.rb,117
+class AddDeviseToUsers < ActiveRecord::MigrationAddDeviseToUsers1,0
+  def self.upup2,0
+  def self.downdown44,0
+
+db/migrate/20150320150735_add_user_id_to_question.rb,100
+class AddUserIdToQuestion < ActiveRecord::MigrationAddUserIdToQuestion1,0
+  def changechange2,0
+
+db/migrate/20150324213023_add_user_id_to_answer.rb,96
+class AddUserIdToAnswer < ActiveRecord::MigrationAddUserIdToAnswer1,0
+  def changechange2,0
+
+db/migrate/20150408210745_add_best_to_answer.rb,92
+class AddBestToAnswer < ActiveRecord::MigrationAddBestToAnswer1,0
+  def changechange2,0
+
+db/migrate/20150411194305_create_attachments.rb,96
+class CreateAttachments < ActiveRecord::MigrationCreateAttachments1,0
+  def changechange2,0
+
+db/migrate/20150411203142_add_question_id_to_attachment.rb,112
+class AddQuestionIdToAttachment < ActiveRecord::MigrationAddQuestionIdToAttachment1,0
+  def changechange2,0
+
+db/migrate/20150412135749_convert_attachment_to_polymorphic.rb,122
+class ConvertAttachmentToPolymorphic < ActiveRecord::MigrationConvertAttachmentToPolymorphic1,0
+  def changechange2,0
+
+db/migrate/20150412195100_rename_to_attachable.rb,98
+class RenameToAttachable < ActiveRecord::MigrationRenameToAttachable1,0
+  def changechange2,0
+
+db/migrate/20150414223803_correct_attachments_index.rb,108
+class CorrectAttachmentsIndex < ActiveRecord::MigrationCorrectAttachmentsIndex1,0
+  def changechange2,0
+
+db/migrate/20150421204644_create_votes.rb,84
+class CreateVotes < ActiveRecord::MigrationCreateVotes1,0
+  def changechange2,0
+
+db/migrate/20150421212454_add_user_id_to_vote.rb,92
+class AddUserIdToVote < ActiveRecord::MigrationAddUserIdToVote1,0
+  def changechange2,0
+
+db/migrate/20150505094544_create_comments.rb,90
+class CreateComments < ActiveRecord::MigrationCreateComments1,0
+  def changechange2,0
+
+db/migrate/20150505095549_add_index_to_comment.rb,96
+class AddIndexToComment < ActiveRecord::MigrationAddIndexToComment1,0
+  def changechange2,0
+
+db/migrate/20150505184520_add_body_to_comments.rb,96
+class AddBodyToComments < ActiveRecord::MigrationAddBodyToComments1,0
+  def changechange2,0
+
+lib/application_responder.rb,82
+class ApplicationResponder < ActionController::ResponderApplicationResponder1,0
+
+spec/support/acceptance_helper.rb,85
+module AcceptanceControllerAcceptanceController1,0
+  def sign_in(user)sign_in2,0
+
+spec/support/controller_macros.rb,81
+module ControllerMacrosControllerMacros1,0
+  def sign_in_usersign_in_user2,0

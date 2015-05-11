@@ -4,7 +4,7 @@
     .answer-errors
     = f.text_area :body
   p
-    = f.fields_for :attachments do |a|
+    = f.fields_for :attachments, @answer.attachments.build do |a|
       = a.label :file
       = a.file_field :file
       = a.link_to_remove 'Remove File'
