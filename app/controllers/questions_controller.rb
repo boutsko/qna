@@ -24,7 +24,10 @@ class QuestionsController < ApplicationController
   end
   
   def create
-    respond_with(@question = Question.create(question_params))
+    @question = Question.new(question_params)
+    @question.user = current_user
+    @question.save
+    respond_with(@question)
   end
 
   def update
@@ -54,7 +57,6 @@ class QuestionsController < ApplicationController
   
   def question_params
     strong_params = params.require(:question).permit(:title, :body, attachments_attributes: [:id, :file, :_destroy])
-    strong_params.merge(user_id: current_user.id) if user_signed_in?
   end
 
 end
