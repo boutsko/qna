@@ -1,8 +1,9 @@
 class User < ActiveRecord::Base
+  attr_accessor :allow_blank_password
   # Include default devise modules. Others available are:
   # :confirmable, :lockable, :timeoutable and :omniauthable
   devise :database_authenticatable, :registerable,
-         :recoverable, :rememberable, :trackable, :validatable, :omniauthable, omniauth_providers: [:facebook]
+         :recoverable, :rememberable, :trackable, :validatable, :omniauthable, omniauth_providers: [:facebook, :twitter]
 
   has_many :authorizations
 
@@ -23,6 +24,8 @@ class User < ActiveRecord::Base
     return authorization.user if authorization
 
     email = auth.info[:email]
+    return User.new unless email
+    
     user = User.where(email: email).first
     if user
       user.create_authorization(auth)
@@ -38,5 +41,9 @@ class User < ActiveRecord::Base
   def create_authorization(auth)
     self.authorizations.create(provider: auth.provider, uid: auth.uid)
   end
-  
+
+  def password_required?
+    !allow_blank_password && super
+  end
+
 end
