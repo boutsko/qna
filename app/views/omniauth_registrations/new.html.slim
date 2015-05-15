@@ -1,0 +1,12 @@
+- if @user.errors.any?
+  ul class="list-unstyled"
+    - @user.errors.full_messages.each do |m|
+      li= m
+
+= form_tag(omniauth_registrations_path) do
+  .row
+    .col-md-4
+      .form-group
+        = label_tag 'Email'
+        = email_field_tag :email, '', class: "form-control"
+      = submit_tag 'Save', class: "btn btn-primary"

@@ -39,6 +39,9 @@ gem "nested_form"
 gem 'private_pub'
 gem 'thin'
 gem 'responders'
+gem 'omniauth'
+gem 'omniauth-facebook'
+gem 'omniauth-twitter'
 
 gem 'ripper-tags'
 
