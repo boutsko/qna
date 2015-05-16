@@ -1,11 +1,11 @@
 class QuestionsController < ApplicationController
   before_action :authenticate_user!, except: [ :index, :show ]
-#  before_action :load_question, only: [:show, :edit, :update, :destroy]
+  before_action :load_question, only: [:show, :edit, :update, :destroy]
   before_action :user_created_question?, only: [:update, :destroy]
   before_action :build_answer, only: [:show]
   respond_to :html
 
- load_and_authorize_resource
+  authorize_resource
   
   include Voted
   
@@ -46,9 +46,9 @@ class QuestionsController < ApplicationController
     @answer = @question.answers.build
   end
   
-  # def load_question
-  #   @question = Question.find(params[:id])
-  # end
+  def load_question
+    @question = Question.find(params[:id])
+  end
 
   def user_created_question?
     if @question.user_id != current_user.id
