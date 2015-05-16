@@ -42,6 +42,7 @@ gem 'responders'
 gem 'omniauth'
 gem 'omniauth-facebook'
 gem 'omniauth-twitter'
+gem 'cancancan'
 
 gem 'ripper-tags'
 
