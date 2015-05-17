@@ -6,14 +6,12 @@ class Ability
   def initialize(user)
     @user = user
 
-    user_abilities
+    if user
+      user.admin? ? admin_abilities : user_abilities
+    else
+      guest_abilities
+    end
   end
-  #   if user
-  #     user.admin? ? admin_abilities : user_abilities
-  #   else
-  #     guest_abilities
-  #   end
-  # end
 
   def guest_abilities
     can :read, :all
@@ -22,16 +20,26 @@ class Ability
   def user_abilities
     guest_abilities
     can :manage, [ Question, Answer ], user: user
-    # binding.pry
     can :best, Answer do |a|
       @user == a.question.user
     end
     can :manage, Comment
 
-    can :create, Vote do |v|
-      v.user_id != user.id
+    can :manage, Vote do |v|
+      @user != v.user
     end
 
+    can :like, Answer do |a|
+      @user != a.user
+    end
+
+    can :dislike, Answer do |a|
+      @user != a.user
+    end
+
+    can :withdraw_vote, Answer do |a|
+      @user != a.user
+    end
   end
   
   def admin_abilities
