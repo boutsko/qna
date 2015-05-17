@@ -8,6 +8,8 @@ class AnswersController < ApplicationController
   respond_to :html
   respond_to :js
 
+ authorize_resource
+  
   include Voted
   
   def new

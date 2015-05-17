@@ -5,7 +5,7 @@ class QuestionsController < ApplicationController
   before_action :build_answer, only: [:show]
   respond_to :html
 
-  authorize_resource
+ authorize_resource
   
   include Voted
   
