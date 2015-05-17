@@ -22,7 +22,11 @@ describe Ability do
   describe 'user' do
     let(:user) { create :user }
     let(:other) { create :user }
-
+    let(:question) { create :question, user: user }
+    let(:answer) { create :answer, question: question }
+    let(:other_question) { create :question, user: other }
+    let(:other_answer) { create :answer, question: other_question }
+    
 
     it { should_not be_able_to :manage, :all }
     it { should be_able_to :read, :all }
@@ -38,7 +42,17 @@ describe Ability do
 
     it { should be_able_to :update, create(:comment, body: "my comment") }
 
-  end
+    it { should_not be_able_to :best, other_answer }
+    it { should be_able_to :best, answer }
 
+    it { should be_able_to :like, other_answer }
+    it { should be_able_to :dislike, other_answer }
+    it { should be_able_to :withdraw_vote, other_answer }
+
+    it { should_not be_able_to :like, answer }
+    it { should_not be_able_to :dislike, answer }
+    it { should_not be_able_to :withdraw_vote, answer }
+
+  end
 
 end
