@@ -23,22 +23,19 @@ class Ability
     can :best, Answer do |a|
       user == a.question.user
     end
+    
     can :manage, Comment
 
-    can :manage, Vote do |v|
-      user != v.user
+    can :like, [ Question, Answer ] do |votable|
+      user != votable.user
     end
 
-    can :like, Answer do |a|
-      user != a.user
+    can :dislike, [ Question, Answer ] do |votable|
+      user != votable.user
     end
 
-    can :dislike, Answer do |a|
-      user != a.user
-    end
-
-    can :withdraw_vote, Answer do |a|
-      user != a.user
+    can :withdraw_vote, [ Question, Answer ] do |votable|
+      user != votable.user
     end
   end
   
