@@ -21,24 +21,24 @@ class Ability
     guest_abilities
     can :manage, [ Question, Answer ], user: user
     can :best, Answer do |a|
-      @user == a.question.user
+      user == a.question.user
     end
     can :manage, Comment
 
     can :manage, Vote do |v|
-      @user != v.user
+      user != v.user
     end
 
     can :like, Answer do |a|
-      @user != a.user
+      user != a.user
     end
 
     can :dislike, Answer do |a|
-      @user != a.user
+      user != a.user
     end
 
     can :withdraw_vote, Answer do |a|
-      @user != a.user
+      user != a.user
     end
   end
   
