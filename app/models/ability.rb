@@ -27,15 +27,15 @@ class Ability
     can :manage, Comment
 
     can :like, [ Question, Answer ] do |votable|
-      user != votable.user
+      user.id != votable.user_id
     end
 
     can :dislike, [ Question, Answer ] do |votable|
-      user != votable.user
+      user.id != votable.user_id
     end
 
     can :withdraw_vote, [ Question, Answer ] do |votable|
-      user != votable.user
+      user.id != votable.user_id
     end
   end
   
