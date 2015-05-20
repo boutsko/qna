@@ -3,10 +3,9 @@ class QuestionsController < ApplicationController
   before_action :load_question, only: [:show, :edit, :update, :destroy]
   before_action :user_created_question?, only: [:update, :destroy]
   before_action :build_answer, only: [:show]
-
   respond_to :html
 
-  authorize_resource
+ authorize_resource
   
   include Voted
   
