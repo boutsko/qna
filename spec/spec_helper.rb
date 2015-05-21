@@ -88,5 +88,10 @@ RSpec.configure do |config|
   Kernel.srand config.seed
 =end
 
+  config.warnings = false
   config.order = :random
+
+  config.run_all_when_everything_filtered = true
+  config.filter_run :focus
+  config.full_backtrace=false
 end
