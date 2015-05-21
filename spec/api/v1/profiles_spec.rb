@@ -25,21 +25,19 @@ describe 'Profile API' do
       expect(response).to be_success
     end
 
-    it 'contains email' do
-      expect(response.body).to be_json_eql(me.email.to_json).at_path('email')
-    end
 
-    it 'contains id' do
-      expect(response.body).to be_json_eql(me.id.to_json).at_path('id')
-    end
-
-    it 'does not contains password' do
-      expect(response.body).to_not have_json_path('password')
-    end
-
-    it 'does not contains encripted_password' do
-      expect(response.body).to_not have_json_path('encripted_password')
+    %w(email id created_at updated_at).each do |attr|
+      
+      it "contains #{attr}" do
+        expect(response.body).to be_json_eql(me.send(attr.to_sym).to_json).at_path(attr)
+      end
     end
     
+    %w(password encrypted_password).each do |attr|
+      
+      it "does not contains #{attr} " do
+        expect(response.body).to_not have_json_path(attr)
+      end
+    end
   end
 end
