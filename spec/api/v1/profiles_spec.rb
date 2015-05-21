@@ -14,4 +14,14 @@ describe 'Profile API' do
       end
     end
   end
+
+  context 'authorized' do
+    let(:me) { create(:user) }
+    let(:access_token) { create(:access_token) }
+    
+    it 'returns 200 status' do
+      get '/api/v1/profiles/me', format: :json, access_token: access_token.token
+      expect(response).to be_success
+    end
+  end
 end
