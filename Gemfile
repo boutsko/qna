@@ -43,6 +43,7 @@ gem 'omniauth'
 gem 'omniauth-facebook'
 gem 'omniauth-twitter'
 gem 'cancancan'
+gem 'doorkeeper'
 
 gem 'ripper-tags'
 
@@ -77,5 +78,6 @@ end
 
 group :test do
   gem 'shoulda-matchers'
+  gem 'json_spec'
 
 end
