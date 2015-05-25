@@ -36,6 +36,31 @@ describe 'Answers API' do
       it 'returns list of answers' do
         expect(response.body).to have_json_size(answers.size).at_path("answers")
       end
+
+      resource_attributes(:answer).each do |attr|
+        it "contains #{ attr }" do
+          resource_attr = resource.send(attr.to_sym).to_json
+          path = "#{ path_resource }/#{ attr }"
+          expect(response.body).to be_json_eql(resource_attr).at_path(path)
+        end
+      end
+
+      resource_associations(:answer).each do |association|
+        context "#{ association }" do
+          it "includes #{ association }" do
+            path = "#{ path_resource }/#{ association }"
+            expect(response.body).to have_json_size(resource.send(association).count).at_path(path)
+          end
+
+          resource_attributes(association).each do |attr|
+            it "#{ association.to_s.singularize } contains #{ attr }" do
+              path = "#{ path_resource }/#{ association }/0/#{ attr }"
+              association_attr = send(association).first.send(attr.to_sym).to_json
+              expect(response.body).to be_json_eql(association_attr).at_path(path)
+            end
+          end
+        end
+      end
     end
   end
 end
