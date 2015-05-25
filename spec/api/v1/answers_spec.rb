@@ -27,6 +27,10 @@ describe 'Answers API' do
       let!(:comments) { create_list :comment, 3, commentable: resource }
       let!(:attachments) { create_list :attachment, 1, attachable: answer }
 
+      let(:attributes) { attributes_for :answer }
+      let(:params) { { answer: attributes, format: :json, access_token: access_token.token } }
+      let(:post_create) { post api_v1_question_answers_path(question), params }
+      
       before { get api_v1_question_answers_path(question), format: :json, access_token: access_token.token }
       
       it 'returns 200 status code' do
@@ -61,6 +65,17 @@ describe 'Answers API' do
           end
         end
       end
+
+      context 'create new answer' do
+		it 'returns status created' do
+		  post_create
+		  expect(response).to be_created
+		end
+
+		it 'saves new answer in db' do
+		  expect { post_create }.to change { question.answers.count }.by(1)
+		end
+	  end
     end
   end
 end
