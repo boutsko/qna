@@ -26,10 +26,6 @@ describe 'Questions API' do
       let!(:comments) { create_list(:comment, 3, commentable: resource) }
       let!(:attachments) { create_list(:attachment, 1, attachable: question) }
 
-      let(:attributes) { attributes_for :question }
-      let(:params) { { question: attributes, format: :json, access_token: access_token.token } }
-      let(:post_create) { post api_v1_questions_path, params }
-      
       before { get api_v1_questions_path, format: :json, access_token: access_token.token }
       
       it 'returns 200 status code' do
@@ -64,6 +60,14 @@ describe 'Questions API' do
           end
         end
       end
+    end
+
+
+    describe 'POST /questions' do
+      let(:attributes) { attributes_for :question }
+      let(:access_token) { create(:access_token) }
+      let(:params) { { question: attributes, format: :json, access_token: access_token.token } }
+      let(:post_create) { post api_v1_questions_path, params }
       
       context 'create new question' do
 		it 'returns status created' do
@@ -75,7 +79,6 @@ describe 'Questions API' do
 		  expect { post_create }.to change { Question.count }.by(1)
 		end
 	  end
-
     end
   end
 
