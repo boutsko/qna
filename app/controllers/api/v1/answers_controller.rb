@@ -5,6 +5,10 @@ class Api::V1::AnswersController < Api::V1::BaseController
     respond_with (@answers = @question.answers)
   end
 
+  def show
+    respond_with Answer.find(params[:id])
+  end
+  
   def create
     respond_with(@answer = @question.answers.create(answer_params))
   end
@@ -17,6 +21,7 @@ class Api::V1::AnswersController < Api::V1::BaseController
 
   def answer_params
     strong_params = params.require(:answer).permit(:body, attachments_attributes: [:id, :file, :_destroy])
+    strong_params.merge(user_id: current_resource_owner.id)
   end
 
 end

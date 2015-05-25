@@ -1,7 +1,7 @@
 require 'rails_helper'
 
 describe 'Answers API' do
-  describe 'GET /index' do
+  describe 'GET /questions/:question_id/answers' do
     context 'unauthorized' do
       let!(:question) { create :question }
       
@@ -27,9 +27,6 @@ describe 'Answers API' do
       let!(:comments) { create_list :comment, 3, commentable: resource }
       let!(:attachments) { create_list :attachment, 1, attachable: answer }
 
-      let(:attributes) { attributes_for :answer }
-      let(:params) { { answer: attributes, format: :json, access_token: access_token.token } }
-      let(:post_create) { post api_v1_question_answers_path(question), params }
       
       before { get api_v1_question_answers_path(question), format: :json, access_token: access_token.token }
       
@@ -65,7 +62,15 @@ describe 'Answers API' do
           end
         end
       end
+    end
 
+    describe 'POST /questions/:question_id/answers' do
+      let(:question) { create(:question) }
+      let(:attributes) { attributes_for :answer }
+      let(:access_token) { create(:access_token) }
+      let(:params) { { answer: attributes, format: :json, access_token: access_token.token } }
+      let(:post_create) { post api_v1_question_answers_path(question), params }
+      
       context 'create new answer' do
 		it 'returns status created' do
 		  post_create
