@@ -23,9 +23,9 @@ describe 'Answers API' do
       let!(:answer) { create(:answer, question: question) }
       let!(:answer2) { create(:answer, question: question) }
       let!(:answers) { [answer, answer2] }
-
-      let!(:comments) { create_list :comment, 3, commentable: resource }
       let!(:resource) { answer } 
+      let!(:comments) { create_list :comment, 3, commentable: resource }
+      let!(:attachments) { create_list :attachment, 1, attachable: answer }
 
       before { get api_v1_question_answers_path(question), format: :json, access_token: access_token.token }
       
