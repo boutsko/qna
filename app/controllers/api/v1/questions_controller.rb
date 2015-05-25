@@ -1,7 +1,6 @@
 class Api::V1::QuestionsController < Api::V1::BaseController
 
   def index
-
     respond_with(@questions = Question.all)
   end
 
@@ -17,6 +16,7 @@ class Api::V1::QuestionsController < Api::V1::BaseController
 
   def question_params
     strong_params = params.require(:question).permit(:title, :body, attachments_attributes: [:id, :file, :_destroy])
+    strong_params.merge(user_id: current_resource_owner.id)
   end
 
 end

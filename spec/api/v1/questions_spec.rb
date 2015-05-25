@@ -1,7 +1,7 @@
 require 'rails_helper'
 
 describe 'Questions API' do
-  describe 'GET /index' do
+  describe 'GET /questions' do
     context 'unauthorized' do
       let!(:question) { create :question }
       
@@ -64,6 +64,18 @@ describe 'Questions API' do
           end
         end
       end
+      
+      context 'create new question' do
+		it 'returns status created' do
+		  post_create
+		  expect(response).to be_created
+		end
+
+		it 'saves new question in db' do
+		  expect { post_create }.to change { Question.count }.by(1)
+		end
+	  end
+
     end
   end
 
