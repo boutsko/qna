@@ -44,7 +44,10 @@ gem 'omniauth-facebook'
 gem 'omniauth-twitter'
 gem 'cancancan'
 gem 'doorkeeper'
-gem "active_model_serializers", "~> 0.9.3"
+gem 'active_model_serializers', '~> 0.9.3'
+gem 'oj'
+gem 'oj_mimic_json'
+
 
 gem 'ripper-tags'
 
