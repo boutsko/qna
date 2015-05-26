@@ -1,5 +1,5 @@
 class Api::V1::AnswersController < Api::V1::BaseController
-  before_action :load_question
+  before_action :load_question, except: :show
 
   def index
     respond_with (@answers = @question.answers)
@@ -20,7 +20,7 @@ class Api::V1::AnswersController < Api::V1::BaseController
   end
 
   def answer_params
-    strong_params = params.require(:answer).permit(:body, attachments_attributes: [:id, :file, :_destroy])
+    strong_params = params.require(:answer).permit(:body)
     strong_params.merge(user_id: current_resource_owner.id)
   end
 

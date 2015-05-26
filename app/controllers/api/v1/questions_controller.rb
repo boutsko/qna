@@ -15,7 +15,7 @@ class Api::V1::QuestionsController < Api::V1::BaseController
   private
 
   def question_params
-    strong_params = params.require(:question).permit(:title, :body, attachments_attributes: [:id, :file, :_destroy])
+    strong_params = params.require(:question).permit(:title, :body)
     strong_params.merge(user_id: current_resource_owner.id)
   end
 
