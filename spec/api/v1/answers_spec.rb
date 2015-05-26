@@ -63,24 +63,67 @@ describe 'Answers API' do
         end
       end
     end
+  end
 
-    describe 'POST /questions/:question_id/answers' do
-      let(:question) { create(:question) }
-      let(:attributes) { attributes_for :answer }
-      let(:access_token) { create(:access_token) }
-      let(:params) { { answer: attributes, format: :json, access_token: access_token.token } }
-      let(:post_create) { post api_v1_question_answers_path(question), params }
-      
-      context 'create new answer' do
-		it 'returns status created' do
-		  post_create
-		  expect(response).to be_created
-		end
+  describe "GET /answers/:id" do
 
-		it 'saves new answer in db' do
-		  expect { post_create }.to change { question.answers.count }.by(1)
-		end
-	  end
+    let!(:question) { create(:question) }
+    let!(:resource) { answer } 
+    let!(:resource) { answer }
+    let(:access_token) { create(:access_token) }
+
+    let!(:answer) { create(:answer) }
+    let!(:comments) { create_list(:comment, 3, commentable: answer).reverse }
+    let!(:attachments) { create_list(:attachment, 2, attachable: answer).map { |a| a.file.url }.reverse }
+
+    let(:path_resource) { "answers/#{answer.id}" }
+    
+    context 'unauthorized' do
+      it 'returns 401 status if there is no access_token' do
+        get api_v1_answer_path(answer), format: :json
+      end
+    end
+
+    context 'authorized' do
+      context 'with valid answer id' do
+
+        before { get api_v1_answer_path(answer), access_token: access_token.token, format: :json }
+
+        %w(id body created_at updated_at).each do |attr|
+  
+          it "contains #{attr}" do
+            expect(response.body).to be_json_eql(answer.send(attr.to_sym).to_json).at_path("answer/#{attr}")
+          end
+        end
+
+        %w(password encrypted_password).each do |attr|
+
+          it "does not contains #{attr} " do
+            expect(response.body).to_not have_json_path("answer/#{attr}")
+          end
+        end
+      end
     end
   end
+
+  
+  describe 'POST /questions/:question_id/answers' do
+    let(:question) { create(:question) }
+    let(:attributes) { attributes_for :answer }
+    let(:access_token) { create(:access_token) }
+    let(:params) { { answer: attributes, format: :json, access_token: access_token.token } }
+    let(:post_create) { post api_v1_question_answers_path(question), params }
+    
+    context 'create new answer' do
+	  it 'returns status created' do
+		post_create
+		expect(response).to be_created
+	  end
+
+	  it 'saves new answer in db' do
+		expect { post_create }.to change { question.answers.count }.by(1)
+	  end
+	end
+  end
 end
+
