@@ -9,16 +9,16 @@ class Api::V1::QuestionsController < Api::V1::BaseController
   def show
     respond_with @question
   end
-  
+
   def create
-    respond_with(@question = Question.create(question_params))
+    @question = Question.create question_params.merge(user_id: current_resource_owner.id)
+    respond_with @question
   end
 
   private
 
   def question_params
     strong_params = params.require(:question).permit(:title, :body)
-    strong_params.merge(user_id: current_resource_owner.id)
   end
 
 end

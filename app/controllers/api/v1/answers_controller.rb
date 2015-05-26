@@ -12,7 +12,8 @@ class Api::V1::AnswersController < Api::V1::BaseController
   end
   
   def create
-    respond_with(@answer = @question.answers.create(answer_params))
+    @answer = @question.answers.create answer_params.merge(user_id: current_resource_owner.id)
+    respond_with @answer
   end
 
   private
@@ -23,7 +24,6 @@ class Api::V1::AnswersController < Api::V1::BaseController
 
   def answer_params
     strong_params = params.require(:answer).permit(:body)
-    strong_params.merge(user_id: current_resource_owner.id)
   end
 
 end
