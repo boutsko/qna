@@ -123,6 +123,11 @@ describe 'Answers API' do
 	  it 'saves new answer in db' do
 		expect { post_create }.to change { question.answers.count }.by(1)
 	  end
+
+      it 'answer relates to question' do
+        post_create
+        expect(assigns(:question)).to eq question
+      end
 	end
   end
 end
