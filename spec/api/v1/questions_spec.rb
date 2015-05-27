@@ -78,6 +78,13 @@ describe 'Questions API' do
 		it 'saves new question in db' do
 		  expect { post_create }.to change { Question.count }.by(1)
 		end
+
+        it 'relates to user' do
+          post_create
+          puts response.body
+          puts "current_resource_owner: #{access_token.resource_owner_id}"
+          expect(response.body).to be_json_eql(access_token.resource_owner_id).at_path("question/user_id")
+        end
 	  end
     end
   end
