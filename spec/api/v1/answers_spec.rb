@@ -137,8 +137,8 @@ describe 'Answers API' do
         post_create
         expect(response.body).to be_json_eql(access_token.resource_owner_id).at_path("answer/user_id")
       end
-
 	end
   end
+
 end
 

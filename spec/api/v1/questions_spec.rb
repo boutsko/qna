@@ -68,6 +68,7 @@ describe 'Questions API' do
       let(:access_token) { create(:access_token) }
       let(:params) { { question: attributes, format: :json, access_token: access_token.token } }
       let(:post_create) { post api_v1_questions_path, params }
+      let!(:user) { User.find(access_token.resource_owner_id) }
       
       context 'create new question' do
 		it 'returns status created' do
@@ -79,7 +80,11 @@ describe 'Questions API' do
 		  expect { post_create }.to change { Question.count }.by(1)
 		end
 
-        it 'relates to user' do
+        it 'has user' do
+          expect{ post_create }.to change(user.questions, :count).by(1)
+        end
+        
+        it 'relates to user via json' do
           post_create
           expect(response.body).to be_json_eql(access_token.resource_owner_id).at_path("question/user_id")
         end
