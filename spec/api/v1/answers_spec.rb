@@ -126,7 +126,7 @@ describe 'Answers API' do
 
       it 'answer relates to question' do
         post_create
-        expect(assigns(:question)).to eq question
+        expect(question.answers.last.as_json[:question_id]).to match(question.as_json[:id])
       end
 	end
   end
