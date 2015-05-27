@@ -113,20 +113,31 @@ describe 'Answers API' do
     let(:access_token) { create(:access_token) }
     let(:params) { { answer: attributes, format: :json, access_token: access_token.token } }
     let(:post_create) { post api_v1_question_answers_path(question), params }
+    let!(:user) { User.find(access_token.resource_owner_id) }
     
     context 'create new answer' do
 	  it 'returns status created' do
-		post_create
-		expect(response).to be_created
+	    post_create
+	    expect(response).to be_created
 	  end
 
 	  it 'saves new answer in db' do
-		expect { post_create }.to change { question.answers.count }.by(1)
+	    expect { post_create }.to change { question.answers.count }.by(1)
 	  end
 
       it 'answer relates to question'do
         expect { post_create }.to change(question.answers, :count).by(1)
       end
+
+      it 'has user' do
+        expect{ post_create }.to change(user.answers, :count).by(1)
+      end
+      
+      it 'relates to user via json' do
+        post_create
+        expect(response.body).to be_json_eql(access_token.resource_owner_id).at_path("answer/user_id")
+      end
+
 	end
   end
 end
