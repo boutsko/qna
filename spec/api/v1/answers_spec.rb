@@ -124,9 +124,8 @@ describe 'Answers API' do
 		expect { post_create }.to change { question.answers.count }.by(1)
 	  end
 
-      it 'answer relates to question' do
-        post_create
-        expect(question.answers.last.as_json["question_id"]).to match(question.as_json["id"])
+      it 'answer relates to question'do
+        expect { post_create }.to change(question.answers, :count).by(1)
       end
 	end
   end
