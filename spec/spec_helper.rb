@@ -95,3 +95,15 @@ RSpec.configure do |config|
   config.filter_run :focus
   config.full_backtrace=false
 end
+
+def resource_attributes(resource)
+  resource_serializer(resource)._attributes
+end
+
+def resource_associations(resource)
+  resource_serializer(resource)._associations.keys
+end
+
+def resource_serializer(resource)
+  "#{ resource.to_s.singularize.capitalize }Serializer".classify.constantize
+end
