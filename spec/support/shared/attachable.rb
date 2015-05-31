@@ -1,42 +1,33 @@
-require 'acceptance_helper'
+shared_examples_for "attachable" do
 
-feature 'Add files to question', %q{
-  In order to illustrate my question
-  As a question's author
-  I'd like to be able to attach files
-}  do
+  # let(:path) { new_question_path }
+  # let(:attachable) { question }
 
 
-  given(:user) { create(:user) }
-  given!(:question) { build(:question) }
-  given(:files) { Array[ "spec_helper.rb", "rails_helper.rb" ] }
 
-  background do
-    sign_in(user)
-    visit path
-  end
+  # let(:user) { create(:user) }
+  # let!(:question) { build(:question) }
+  # let(:files) { Array[ "spec_helper.rb", "rails_helper.rb" ] }
 
-  let(:path) { new_question_path }
-  let(:attachable) { question }
+  # background do
+  #   sign_in(user)
+  #   visit path
+  # end
 
-  it_behaves_like "attachable"
-  
-  scenario 'User adds file when asks question', js: true do
+  scenario "User adds file when sends question", js: true do
 
-    fill_in 'Title', with: 'Test question'
-    fill_in 'Body', with: 'text text'
-
+    fill_up_form
+    
     attach_file 'File', "#{Rails.root}/spec/spec_helper.rb"
     click_on 'Create'
     sleep 1
     expect(page).to have_link 'spec_helper.rb', href: '/uploads/attachment/file/1/spec_helper.rb'
   end 
 
-  scenario 'User adds files when asks question', js: true do
+  scenario "User adds files when sends question", js: true do
 
-    fill_in 'Title', with: 'Test question'
-    fill_in 'Body', with: 'text text'
-
+    fill_up_form
+    
     click_on "Add file to question"
 
     inputs = all('input[type="file"]')
@@ -53,18 +44,17 @@ feature 'Add files to question', %q{
   end
   scenario 'User adds and removes file when asks question', js: true do
 
-    fill_in 'Title', with: 'Test question'
-    fill_in 'Body', with: 'text text'
-
+    fill_up_form
+    
     attach_file 'File', "#{Rails.root}/spec/spec_helper.rb"
     click_on 'Delete File'
     click_on 'Create'
     expect(page).to_not have_link 'spec_helper.rb', href: '/uploads/attachment/file/1/spec_helper.rb'
   end
 
-  def fill_up_form
-    fill_in 'Title', with: 'Test question'
-    fill_in 'Body', with: 'text text'
-  end
-
 end
+
+# def fill_up_form
+#   fill_in 'Title', with: 'Test question'
+#   fill_in 'Body', with: 'text text'
+# end
