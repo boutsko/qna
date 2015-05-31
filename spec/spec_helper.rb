@@ -89,7 +89,7 @@ RSpec.configure do |config|
 =end
 
   config.warnings = false
-  config.order = :random
+#  config.order = :random
 
   config.run_all_when_everything_filtered = true
   config.filter_run :focus
