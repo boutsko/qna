@@ -60,10 +60,6 @@ RSpec.describe QuestionsController, type: :controller do
     it 'assigns requested question to @question' do
       expect(assigns(:question)).to eq question
     end
-
-    it 'renders edit view' do
-      expect(response).to render_template :edit
-    end
   end
 
   describe 'POST #create' do
