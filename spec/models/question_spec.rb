@@ -12,6 +12,7 @@ describe Question, type: :model do
   it { should belong_to(:user) }
 
   it_should_behave_like "attachable"
+  it_should_behave_like "commentable"
 
   describe 'reputation' do
     let(:user) { create(:user) }
