@@ -8,6 +8,7 @@ RSpec.describe Answer, type: :model do
   it { should validate_presence_of :body }
 
   it_should_behave_like "attachable"
+  it_should_behave_like "commentable"
     
   describe "#make_best" do
     let(:question) { create(:question) }
