@@ -3,8 +3,9 @@ require 'rails_helper'
 describe 'Questions API' do
   describe 'GET /questions' do
 
-    let(:api_path) { 'api_v1_questions_path' }
-    # it_behaves_like "API Authenticable" 
+    let(:api_path) { '/api/v1/questions' }
+
+    it_behaves_like "API Authenticable" 
 
     context 'authorized' do
       let(:path_resource) { "questions/0" }
@@ -51,6 +52,10 @@ describe 'Questions API' do
         end
       end
     end
+    def do_request(options = {})
+      get api_path, { format: :json }.merge(options)
+    end
+
 
 
     describe 'POST /questions' do
