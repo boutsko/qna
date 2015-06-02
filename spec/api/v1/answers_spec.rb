@@ -2,20 +2,12 @@ require 'rails_helper'
 
 describe 'Answers API' do
   describe 'GET /questions/:question_id/answers' do
-    context 'unauthorized' do
-      let!(:question) { create :question }
-      
-      it 'returns 401 status if there is no access_token' do
-        get api_v1_question_answers_path(question), format: :json
-        expect(response.status).to eq 401
-      end
 
-      it 'returns 401 status if access_token is invalid ' do
-        get api_v1_question_answers_path(question), format: :json, access_token: '1234'
-        expect(response.status).to eq 401
-      end
-    end
+    let!(:question) { create :question }
+    let(:api_path) { "/api/v1/questions/#{question.id}/answers" }
 
+    it_behaves_like "API Authenticable" 
+    
     context 'authorized' do
       let(:path_resource) { "answers/0" }
       let(:access_token) { create(:access_token) }
@@ -65,6 +57,10 @@ describe 'Answers API' do
     end
   end
 
+  def do_request(options = {})
+    get api_path, { format: :json }.merge(options)
+  end
+
   describe "GET /answers/:id" do
 
     let!(:question) { create(:question) }
@@ -90,7 +86,7 @@ describe 'Answers API' do
         before { get api_v1_answer_path(answer), access_token: access_token.token, format: :json }
 
         %w(id body created_at updated_at).each do |attr|
-  
+          
           it "contains #{attr}" do
             expect(response.body).to be_json_eql(answer.send(attr.to_sym).to_json).at_path("answer/#{attr}")
           end
