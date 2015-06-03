@@ -6,15 +6,21 @@ feature 'Add files to question', %q{
   I'd like to be able to attach files
 }  do
 
+
   given(:user) { create(:user) }
   given!(:question) { build(:question) }
   given(:files) { Array[ "spec_helper.rb", "rails_helper.rb" ] }
 
   background do
     sign_in(user)
-    visit new_question_path
+    visit path
   end
 
+  let(:path) { new_question_path }
+  let(:attachable) { question }
+
+  it_behaves_like "attachable"
+  
   scenario 'User adds file when asks question', js: true do
 
     fill_in 'Title', with: 'Test question'
@@ -54,6 +60,11 @@ feature 'Add files to question', %q{
     click_on 'Delete File'
     click_on 'Create'
     expect(page).to_not have_link 'spec_helper.rb', href: '/uploads/attachment/file/1/spec_helper.rb'
+  end
+
+  def fill_up_form
+    fill_in 'Title', with: 'Test question'
+    fill_in 'Body', with: 'text text'
   end
 
 end

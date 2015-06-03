@@ -19,5 +19,5 @@ class Answer < ActiveRecord::Base
     self.question.answers.update_all(best: false)
     self.update(best: true)
   end
-  
+
 end

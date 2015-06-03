@@ -2,19 +2,10 @@ require 'rails_helper'
 
 describe 'Questions API' do
   describe 'GET /questions' do
-    context 'unauthorized' do
-      let!(:question) { create :question }
-      
-      it 'returns 401 status if there is no access_token' do
-        get api_v1_questions_path, format: :json
-        expect(response.status).to eq 401
-      end
 
-      it 'returns 401 status if access_token is invalid ' do
-        get api_v1_questions_path, format: :json, access_token: '1234'
-        expect(response.status).to eq 401
-      end
-    end
+    let(:api_path) { '/api/v1/questions' }
+
+    it_behaves_like "API Authenticable" 
 
     context 'authorized' do
       let(:path_resource) { "questions/0" }
@@ -61,6 +52,10 @@ describe 'Questions API' do
         end
       end
     end
+    def do_request(options = {})
+      get api_path, { format: :json }.merge(options)
+    end
+
 
 
     describe 'POST /questions' do

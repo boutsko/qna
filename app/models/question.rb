@@ -12,4 +12,14 @@ class Question < ActiveRecord::Base
   
   #  accepts_nested_attributes_for :attachments
   accepts_nested_attributes_for :attachments, reject_if: proc { |attrib| attrib['file'].nil? }
+
+  after_save :calculate_reputation
+
+  private
+  
+  def calculate_reputation
+    reputation = Reputation.calculate(self)
+    self.user.update(reputation: reputation)
+  end
+
 end
