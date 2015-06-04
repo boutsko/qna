@@ -48,6 +48,7 @@ gem 'active_model_serializers', '~> 0.9.3'
 gem 'oj'
 gem 'oj_mimic_json'
 gem 'delayed_job_active_record'
+gem 'whenever'
 
 gem 'ripper-tags'
 
