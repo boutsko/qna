@@ -50,6 +50,7 @@ gem 'oj_mimic_json'
 # gem 'delayed_job_active_record'
 gem 'sidekiq'
 gem 'whenever'
+gem 'sinatra', '>=1.3.0', require: nil
 
 gem 'ripper-tags'
 
