@@ -46,4 +46,10 @@ class User < ActiveRecord::Base
     !allow_blank_password && super
   end
 
+  def self.send_daily_digest
+    all.each do |user|
+      DailyMailer.digest(user).deliver
+    end
+  end
+
 end
