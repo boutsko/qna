@@ -27,8 +27,10 @@ class Ability
     can :create, Subscriber do |subscriber|
       !@user.subscribers.where(question_id:subscriber.question).present?
     end
-    can :destroy, Subscriber do user_id: user
-      
+    can :destroy, Subscriber do |subscriber|
+      user.id == subscriber.user.id
+    end
+
     can :manage, Comment
 
     can :like, [ Question, Answer ] do |votable|
