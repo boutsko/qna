@@ -123,6 +123,16 @@ ActiveRecord::Schema.define(version: 20150604122124) do
     t.integer  "user_id"
   end
 
+  create_table "subscribers", force: :cascade do |t|
+    t.integer  "user_id"
+    t.integer  "question_id"
+    t.datetime "created_at",  null: false
+    t.datetime "updated_at",  null: false
+  end
+
+  add_index "subscribers", ["question_id"], name: "index_subscribers_on_question_id", using: :btree
+  add_index "subscribers", ["user_id"], name: "index_subscribers_on_user_id", using: :btree
+
   create_table "users", force: :cascade do |t|
     t.datetime "created_at",                          null: false
     t.datetime "updated_at",                          null: false
@@ -156,4 +166,6 @@ ActiveRecord::Schema.define(version: 20150604122124) do
 
   add_foreign_key "answers", "questions"
   add_foreign_key "authorizations", "users"
+  add_foreign_key "subscribers", "questions"
+  add_foreign_key "subscribers", "users"
 end
