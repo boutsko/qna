@@ -34,3 +34,5 @@ emacs-config.el
 #upload-files
 /public/uploads
 /dump.rdb
+/config/*.sphinx.conf
+/db/sphinx
