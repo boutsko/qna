@@ -47,7 +47,11 @@ gem 'doorkeeper'
 gem 'active_model_serializers', '~> 0.9.3'
 gem 'oj'
 gem 'oj_mimic_json'
-
+# gem 'delayed_job_active_record'
+gem 'sidekiq'
+gem 'whenever'
+gem 'sinatra', '>=1.3.0', require: nil
+gem 'sidetiq'
 
 gem 'ripper-tags'
 

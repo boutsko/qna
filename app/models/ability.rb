@@ -16,14 +16,21 @@ class Ability
   def guest_abilities
     can :read, :all
   end
-  
+
   def user_abilities
     guest_abilities
     can :manage, [ Question, Answer ], user: user
     can :best, Answer do |a|
       user == a.question.user
     end
-    
+
+    can :create, Subscriber do |subscriber|
+      !@user.subscribers.where(question_id:subscriber.question).present?
+    end
+    can :destroy, Subscriber do |subscriber|
+      user.id == subscriber.user.id
+    end
+
     can :manage, Comment
 
     can :like, [ Question, Answer ] do |votable|
@@ -38,7 +45,7 @@ class Ability
       user.id != votable.user_id
     end
   end
-  
+
   def admin_abilities
     can :manage, :all
   end

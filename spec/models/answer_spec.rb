@@ -9,7 +9,7 @@ RSpec.describe Answer, type: :model do
 
   it_should_behave_like "attachable"
   it_should_behave_like "commentable"
-    
+  
   describe "#make_best" do
     let(:question) { create(:question) }
     let!(:answer) { create(:answer, question: question, best: true) }
@@ -31,4 +31,22 @@ RSpec.describe Answer, type: :model do
       expect(other_answer.best).to eq true
     end
   end
+
+  # describe 'reputation' do
+  #   let(:user) { create(:user) }
+  #   let(:question) { create(:question) }
+  #   subject { build(:answer, question: question, user: user) }
+    
+  #   it 'should calculate reputation after creation' do
+  #     expect(Reputation).to receive(:calculate).with(subject)
+  #     subject.save!
+  #   end
+
+  #   it 'should not calculate receive after update' do
+  #     subject.save!
+  #     expect(Reputation).to receive(:calculate)
+  #     subject.update(body: '123')
+  #   end
+  # end
+
 end

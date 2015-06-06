@@ -15,9 +15,16 @@ class Answer < ActiveRecord::Base
   
   default_scope { order(best: :desc, created_at: :asc) }
 
+  after_create :calculate_rating
+
   def make_best
     self.question.answers.update_all(best: false)
     self.update(best: true)
   end
 
+  private
+
+  def calculate_rating
+    Reputation.delay.calculate(self)
+  end
 end
