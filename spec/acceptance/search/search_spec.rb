@@ -6,37 +6,61 @@ feature 'User may search content', %q{
         I want to be able search content
 } do
   given!(:user) { create(:user) }
-  given!(:question) { create(:question, title: 'find me', body: 'foo') }
+  given!(:question) { create(:question, user: user, title: 'find me', body: 'foo') }
   given!(:answer) { create(:answer, question: question, body: 'test search') }
-  
-  scenario 'search selected item', js: true do
+  given!(:comment) { create(:comment, body: 'my comment') }
+
+  background do
+	sign_in(user)
+  end
+
+  scenario 'search question', js: true do
     
     ThinkingSphinx::Test.run do
-	  sign_in(user)
-      
       select('Question', from: 'conditions')
       fill_in 'search', with: 'foo'
       click_on 'Search'
-    
+      
 	  expect(page).to have_content  question.body
 	  expect(page).to have_content  question.title
-    end  
+    end
   end
 
-  scenario 'search all', js: true do
+  scenario 'search answer', js: true do
     
     ThinkingSphinx::Test.run do
-	  sign_in(user)
+      select('Answer', from: 'conditions')
+      fill_in 'search', with: 'test'
+      click_on 'Search'
       
+	  expect(page).to have_content  answer.body
+    end
+  end
+
+  scenario 'search comment', js: true do
+    
+    ThinkingSphinx::Test.run do
+      select('Comment', from: 'conditions')
+      fill_in 'search', with: 'my comment'
+      click_on 'Search'
+      
+	  expect(page).to have_content  comment.body
+    end
+  end
+  
+  scenario 'search all', js: true do
+
+    ThinkingSphinx::Test.run do
       select('All', from: 'conditions')
       fill_in 'search', with: ''
       click_on 'Search'
 
-	  expect(page).to have_content  user.email
-	  expect(page).to have_content  question.title
-	  expect(page).to have_content  answer.body
+      expect(page).to have_content  user.email
+      expect(page).to have_content  question.title
+      expect(page).to have_content  question.body
+      expect(page).to have_content  answer.body
+      expect(page).to have_content  comment.body
     end  
   end
-
 
 end
