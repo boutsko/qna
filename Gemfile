@@ -54,6 +54,8 @@ gem 'sinatra', '>=1.3.0', require: nil
 gem 'sidetiq'
 gem 'mysql2'
 gem 'thinking-sphinx'
+gem 'dotenv'
+gem 'dotenv-deployment', require: 'dotenv/deployment'
 
 
 gem 'ripper-tags'
@@ -86,8 +88,12 @@ group :test, :development do
 end
 
 group :development do
-    gem 'guard'
-    gem 'guard-rspec'
+  gem 'capistrano', require: false
+  gem 'capistrano-bundler', require: false
+  gem 'capistrano-rails', require: false
+  gem 'capistrano-rvm', require: false
+  gem 'guard'
+  gem 'guard-rspec'
 end
 
 group :test do
