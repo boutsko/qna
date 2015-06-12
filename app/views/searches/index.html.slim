@@ -1,0 +1,4 @@
+- if @search
+	- @search.each do |s|
+	  = render partial: "#{s.class.name.downcase}", object: s, as: 's'
+
