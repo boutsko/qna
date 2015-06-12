@@ -1,6 +1,6 @@
 class DailyDigestWorker
   include Sidekiq::Worker
-  include Sidekiq::Schedulable
+  include Sidetiq::Schedulable
 
   recurrence { daily(1) }
 
