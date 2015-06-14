@@ -1,10 +1,11 @@
 = render :partial =>  'searches/form'
-- @questions.each do |question|
-  p= link_to question.title, question
+- cache collection_cache_key_for :question do
+  - @questions.each do |question|
+    p= link_to question.title, question
 
-  - if current_user.present? && current_user.id == question.user_id
-    p= link_to "Delete Question", question, method: :delete
+    - if current_user.present? && current_user.id == question.user_id
+      p= link_to "Delete Question", question, method: :delete
 
-- if can?(:create, Question)
-  p= link_to 'Ask question', new_question_path
+  - if can?(:create, Question)
+    p= link_to 'Ask question', new_question_path
 
