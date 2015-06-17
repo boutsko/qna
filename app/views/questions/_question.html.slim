@@ -1,37 +1,38 @@
-div id="question_#{question.id}"
+- cache question do
+  div id="question_#{question.id}"
 
-  td.question_votes
-    = render 'layouts/votes/show', votable: question
+    td.question_votes
+      = render 'layouts/votes/show', votable: question
 
-  p= question.title
-  p= question.body
+    p= question.title
+    p= question.body
 
-  .question-container
-    p Attachments:
+    .question-container
+      p Attachments:
 
-    - question.attachments.each do |a|
-      div class="filename" id="file_#{a.id}"
-        = link_to a.file.identifier, a.file.url
-        - if current_user.present? && current_user.id == question.user_id
-          = link_to 'Delete Attachment', a, method: :delete, id: "delete_file_#{ a.id }", remote: true
+      - question.attachments.each do |a|
+        div class="filename" id="file_#{a.id}"
+          = link_to a.file.identifier, a.file.url
+          - if current_user.present? && current_user.id == question.user_id
+            = link_to 'Delete Attachment', a, method: :delete, id: "delete_file_#{ a.id }", remote: true
 
-  - if current_user.present? && current_user.id == question.user_id
-    p= link_to "Delete Question", question, method: :delete
+    - if current_user.present? && current_user.id == question.user_id
+      p= link_to "Delete Question", question, method: :delete
 
 
-  - if user_signed_in?
-    .comments_new
-      span =< link_to "Create question comment", '', id: "link_new_comment_for_#{ dom_id question }", class: "link_new_comment", data: { question: dom_id(question) }
+    - if user_signed_in?
+      .comments_new
+        span =< link_to "Create question comment", '', id: "link_new_comment_for_#{ dom_id question }", class: "link_new_comment", data: { question: dom_id(question) }
 
-      = form_for [question, question.comments.new], remote: true, html: { id: "form_new_comment_for_#{ dom_id question}", style: "display: true" } do |f|
-        p
-          = f.label :body, t("comment.label.body")
-          br
-          = f.text_area :body
+        = form_for [question, question.comments.new], remote: true, html: { id: "form_new_comment_for_#{ dom_id question}", style: "display: true" } do |f|
+          p
+            = f.label :body, t("comment.label.body")
+            br
+            = f.text_area :body
 
-        p = f.submit "Submit"
+          p = f.submit "Submit"
 
-  = div_for question, :comments, class: :comments
-    = render question.comments
+    = div_for question, :comments, class: :comments
+      = render question.comments
 
 
